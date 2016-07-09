@@ -4,7 +4,8 @@
     "password": "postgres",
     "database": "feedback_development",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "protocol": "postgres"
   },
   "test": {
     "username": "postgres",
@@ -14,10 +15,6 @@
     "dialect": "postgres"
   },
   "production": {
-    "username": "postgres",
-    "password": "postgres",
-    "database": "feedback_production",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "use_env_variable": "DATABASE_URL"
   }
 }
