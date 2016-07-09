@@ -1,7 +1,7 @@
 import React from 'react';
 import Default from './default';
 
-export default className Login extends React.Component {
+export default class Login extends React.Component {
 
   render() {
 
@@ -42,7 +42,7 @@ export default className Login extends React.Component {
             </div>
 
           </main>
-          
+
         </div>
       </Default>
     )
