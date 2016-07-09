@@ -1,14 +1,16 @@
 import React from 'react';
+import Default from './default';
 
-export default class extends React.Component {
+export default class Index extends React.Component {
 
   render() {
+
     return (
-      <html>
-        <body>
-          Ola Frontend!
-        </body>
-      </html>
+      <Default>
+        <div>
+          Olá FrontEnd!
+        </div>
+      </Default>
     )
   }
 
