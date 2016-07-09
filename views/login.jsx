@@ -1,13 +1,14 @@
 import React from 'react';
 import Default from './default';
 
-export default class Login extends React.Component {
+export default className Login extends React.Component {
 
   render() {
 
     return (
       <Default>
         <div className="mdl-layout mdl-js-layout">
+
           <main className="mdl-layout__content">
 
             <div className="card-login-register mdl-card mdl-shadow--2dp">
@@ -41,6 +42,7 @@ export default class Login extends React.Component {
             </div>
 
           </main>
+          
         </div>
       </Default>
     )
