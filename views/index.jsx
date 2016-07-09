@@ -8,7 +8,7 @@ export default class Index extends React.Component {
 
     return (
       <Default>
-        <Landing />
+        <Landing user={this.props.user} />
       </Default>
     )
   }
