@@ -1,5 +1,6 @@
 import React from 'react';
 import Default from './default';
+import Landing from './landing';
 
 export default class Index extends React.Component {
 
@@ -7,9 +8,7 @@ export default class Index extends React.Component {
 
     return (
       <Default>
-        <div>
-          Olá FrontEnd!
-        </div>
+        <Landing />
       </Default>
     )
   }
