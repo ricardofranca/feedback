@@ -2,7 +2,6 @@ import React from 'react';
 import Menu from './menu';
 
 export default class Landing extends React.Component {
-
   render() {
     return (
       <div className="mdl-layout mdl-js-layout">
