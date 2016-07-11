@@ -1,6 +1,7 @@
 import React from 'react';
 import Default from './default';
 import Landing from './landing';
+import SinglePageApplication from './spa';
 
 export default class Index extends React.Component {
 
@@ -8,7 +9,9 @@ export default class Index extends React.Component {
 
     return (
       <Default>
-        <Landing user={this.props.user} />
+        { !this.props.user ?
+          <Landing /> :
+          <SinglePageApplication user={this.props.user}  /> }
       </Default>
     )
   }
