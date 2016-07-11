@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       hash: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       salt: {
         type: Sequelize.STRING
