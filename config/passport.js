@@ -58,9 +58,9 @@ module.exports = function (express, app, path, models) {
     app.use(bodyParser.json());
     app.use(require('express-session')({secret: 'keyboard cat', resave: false, saveUninitialized: false}));
     app.use(require('connect-flash')());
+
     app.use(passport.initialize());
     app.use(passport.session());
 
     app.set("passport", passport);
-
 };

@@ -17,6 +17,7 @@
   },
   "homepage": "http://feedback.herokuapp.com/",
   "dependencies": {
+    "avsc": "^4.1.6",
     "babel": "^6.5.2",
     "babel-cli": "^6.6.5",
     "babel-core": "^6.7.4",
