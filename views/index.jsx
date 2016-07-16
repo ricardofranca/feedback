@@ -9,9 +9,7 @@ export default class Index extends React.Component {
 
     return (
       <Default>
-        { !this.props.user ?
-          <Landing /> :
-          <SinglePageApplication user={this.props.user}  /> }
+        <SinglePageApplication user={this.props.user}  />
       </Default>
     )
   }

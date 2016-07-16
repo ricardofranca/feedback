@@ -1,8 +1,23 @@
 import React from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Invite from './invite.js';
 
 export default class Invites extends React.Component {
+
+  state = { invites: [] }
+
+  componentDidMount() {
+
+    fetch('/invites.json').then(
+      res => res.json().then( this.refreshList )
+    );
+
+  }
+  
+  refreshList = list => {
+    this.setState({
+      invites: list
+    });
+  }
 
   mapInvites = invite => {
     return <Invite key={`invite-${invite.id}`} invite={invite} />
@@ -10,14 +25,12 @@ export default class Invites extends React.Component {
 
   render() {
 
-    const list = this.props.invites.map(this.mapInvites);
+    const list = this.state.invites.map(this.mapInvites);
 
     return(
-      <MuiThemeProvider>
         <div className="invites">
             {list}
         </div>
-      </MuiThemeProvider>
     )
   }
 
