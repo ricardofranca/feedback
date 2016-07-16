@@ -3,9 +3,13 @@ export default class Invites {
   invites = [{
     id: 23,
     name: 'Chico',
+    start: new Date,
+    finish: new Date,
     url: 'https://pbs.twimg.com/profile_images/85884918/barroso_200x200.JPG'
   },{
     id: 30,
+    start: new Date,
+    finish: new Date,
     name: 'renoir'
   }];
 

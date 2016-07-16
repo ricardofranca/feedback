@@ -1,8 +1,6 @@
 import React from 'react';
-import Avatar from 'material-ui/Avatar';
-import FontIcon from 'material-ui/FontIcon';
 import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import Header from './header';
 
 export default class Invite extends React.Component {
 
@@ -30,26 +28,16 @@ export default class Invite extends React.Component {
     this.setState({invite: item});
   }
 
-  getAvatar = () => {
-    const invite = this.state.invite;
-    return (invite && invite.url) ?
-      <Avatar src={invite.url} /> :
-      <Avatar icon={<FontIcon className="material-icons">person</FontIcon>} />;
-  }
-
   render() {
 
     const invite = this.state.invite;
     const name = (invite)? invite.name: '';
-    const avatar = this.getAvatar();
-    const inviteText = `${name} o convida para dar um Feedback sobre o que voce admiria que ele pretende conservar e melhorar o que pode te incomodar`;
+    const {url} = invite;
 
     return(
         <div className="invite">
-          {avatar}
-          <div className="invite-text">
-          {inviteText}
-          </div>
+
+          <Header avatar_url={url} name={name} />
 
           <div className="mdl-grid invite-grid">
 
