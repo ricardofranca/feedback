@@ -1,6 +1,6 @@
 import React from 'react';
-import TextField from 'material-ui/TextField';
 import Header from './header';
+import Questions from './questions';
 
 export default class Invite extends React.Component {
 
@@ -28,80 +28,33 @@ export default class Invite extends React.Component {
     this.setState({invite: item});
   }
 
+  update = (ev, value) => {
+
+    const el = ev.currentTarget.name;
+    const json = {};
+    json[el] = value;
+    fetch(`/invites/${this.state.invite.id}.json`, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(json)
+    });
+
+  }
+
   render() {
 
     const invite = this.state.invite;
     const name = (invite)? invite.name: '';
     const {url} = invite;
+    const onChange = this.update.bind(this);
 
     return(
         <div className="invite">
-
           <Header avatar_url={url} name={name} />
-
-          <div className="mdl-grid invite-grid">
-
-          <div className="mdl-cell mdl-cell--6-col">
-
-          <div className="invite-negative">
-            <i className="fa fa-meh-o" aria-hidden="true"></i>
-          </div>
-
-          <form action="#">
-          <TextField
-            multiLine={true}
-            rows={2}
-            rowsMax={4}
-            name="negative1"
-          />
-          <TextField
-            multiLine={true}
-            rows={2}
-            rowsMax={4}
-            name="negative2"
-          />
-          <TextField
-            multiLine={true}
-            rows={2}
-            rowsMax={4}
-            name="negative3"
-          />
-
-          </form>
-
-          </div>
-
-            <div className="mdl-cell mdl-cell--6-col">
-
-            <div className="invite-positive">
-              <i className="fa fa-smile-o" aria-hidden="true"></i>
-            </div>
-
-            <form action="#">
-            <TextField
-              multiLine={true}
-              rows={2}
-              rowsMax={4}
-              name="positive1"
-            />
-            <TextField
-              multiLine={true}
-              rows={2}
-              rowsMax={4}
-              name="positive2"
-            />
-            <TextField
-              multiLine={true}
-              rows={2}
-              rowsMax={4}
-              name="positive3"
-            />
-            </form>
-
-            </div>
-
-          </div>
-
+          <Questions invite={this.state.invite} onChange={onChange} />
         </div>
     )
   }
