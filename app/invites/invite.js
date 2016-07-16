@@ -6,8 +6,24 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 export default class Invite extends React.Component {
 
+  state = { invite: [] }
+
+  constructor(props) {
+    super(props);
+
+    if(this.props.invite) {
+      this.state.invite = this.props.invite;
+    } else {
+      const {id} = this.props.params;
+      const invite = window.invites.filter(function(invite){
+        return invite.id == id;
+      })[0];
+      this.state.invite = invite;
+    }
+  }
+
   getAvatar = () => {
-    const invite = this.props.invite;
+    const invite = this.state.invite;
     return (invite && invite.url) ?
       <Avatar src={invite.url} /> :
       <Avatar icon={<FontIcon className="muidocs-icon-communication-voicemail" />} />;
@@ -16,7 +32,7 @@ export default class Invite extends React.Component {
   render() {
 
     const avatar = this.getAvatar();
-    const inviteText = `${this.props.invite.name} o convida para dar um Feedback sobre o que voce admiria que ele pretende conservar e melhorar o que pode te incomodar`;
+    const inviteText = `${this.state.invite.name} o convida para dar um Feedback sobre o que voce admiria que ele pretende conservar e melhorar o que pode te incomodar`;
 
     return(
         <div className="invite">

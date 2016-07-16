@@ -1,29 +1,39 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
+import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Invites from './invites/list';
+import Invite from './invites/invite.js';
 
 class App extends React.Component {
 
   render() {
 
-    const invites = [{
-      id: 23,
-      name: 'Chico',
-      url: 'https://pbs.twimg.com/profile_images/85884918/barroso_200x200.JPG'
-    },{
-      id: 30,
-      name: 'renoir'
-    }]
-
     return(
-      <div className="mdl-layout mdl-js-layout">
-        <main className="mdl-layout__content">
-          <Invites invites={invites} />
-        </main>
-      </div>
+      <MuiThemeProvider>
+        <div className="mdl-layout mdl-js-layout">
+          <main className="mdl-layout__content">
+            {this.props.children}
+          </main>
+        </div>
+      </MuiThemeProvider>
     )
   }
 
 }
 
-ReactDOM.render(<App  />, document.getElementById('app'));
+class Root extends React.Component {
+  render() {
+    return (
+      <Router history={browserHistory}>
+        <Route path="/" component={App}>
+          <IndexRedirect to="/invites" />
+          <Route path="/invites" component={Invites} />
+          <Route path="/invites/:id" component={Invite}/>
+        </Route>
+      </Router>
+    )
+  }
+}
+
+ReactDOM.render(<Root  />, document.getElementById('app'));
