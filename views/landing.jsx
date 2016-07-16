@@ -5,8 +5,6 @@ export default class Landing extends React.Component {
 
   render() {
 
-    const username = (this.props.user)? this.props.user.username: '';
-
     return (
       <div className="mdl-layout mdl-js-layout">
         <header className="mdl-layout__header mdl-layout__header">
@@ -21,7 +19,6 @@ export default class Landing extends React.Component {
           <Menu user={this.props.user} />
         </div>
         <main className="mdl-layout__content">
-        {username}
         </main>
       </div>
     )
