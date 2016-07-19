@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './header';
 import Questions from './questions';
+import {Card, CardHeader, CardText} from 'material-ui/Card';
 
 export default class Invite extends React.Component {
 
@@ -51,11 +52,19 @@ export default class Invite extends React.Component {
     const {url} = invite;
     const onChange = this.update.bind(this);
 
+    const inviteText = `${name} o convida para dar um Feedback sobre o que voce admiria que ele pretende conservar e melhorar o que pode te incomodar`;
+
     return(
-        <div className="invite">
-          <Header avatar_url={url} name={name} />
+      <Card className="invite">
+        <CardHeader
+          title={inviteText}
+          subtitle="16 de jul a 20 de jul"
+          avatar={url}
+        />
+        <CardText>
           <Questions invite={this.state.invite} onChange={onChange} />
-        </div>
+        </CardText>
+      </Card>
     )
   }
 

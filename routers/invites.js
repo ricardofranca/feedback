@@ -58,7 +58,6 @@ export default class Invites {
 
     app.get('/invites/:id.json', this.getInvite.bind(this));
     app.get('/invites.json', this.getInvites.bind(this));
-
     app.put('/invites/:id.json', this.save.bind(this))
   }
 
