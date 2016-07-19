@@ -12,7 +12,7 @@ export default class Invites extends React.Component {
     );
 
   }
-  
+
   refreshList = list => {
     this.setState({
       invites: list

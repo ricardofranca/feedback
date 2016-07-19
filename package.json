@@ -67,6 +67,9 @@
     "imagemin-mozjpeg": "^6.0.0",
     "imagemin-pngquant": "^5.0.0",
     "parallelshell": "^2.0.0",
+    "postcss-cssnext": "^2.7.0",
+    "postcss-opacity": "^4.0.0",
+    "poststylus": "^0.2.3",
     "stylus": "^0.54.2",
     "uglifyify": "^3.0.1",
     "uglifyjs": "^2.4.10",
@@ -75,7 +78,7 @@
   "scripts": {
     "postinstall": "sequelize db:migrate",
     "verify:js": "eslint ./app/",
-    "watch:css": "stylus -w -c styles/main.styl -o public/assets/css/main.css",
+    "watch:css": "stylus -w -c -u ./node_modules/poststylus --with \"['postcss-opacity','postcss-cssnext']\" styles/main.styl -o public/assets/css/main.css",
     "watch:js": "watchify -o public/assets/js/bundle.js -v -d app/app.js",
     "build:js": "browserify app/app.js -o public/assets/js/bundle.min.js -t babelify -t [uglifyify --no-sourcemap --no-bundle-external]",
     "watch:all": "parallelshell 'npm run watch:js' 'npm run watch:css'",
