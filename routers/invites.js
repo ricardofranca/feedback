@@ -1,6 +1,20 @@
 export default class Invites {
 
-  invites = [{
+  invites = [
+    {
+      id: 18,
+      name: 'Christiano Martins Milfont de Almeida',
+      start: new Date,
+      finish: new Date,
+      url: 'https://pbs.twimg.com/profile_images/85884918/barroso_200x200.JPG',
+      positive1: 'Acredito que tem um humor sempre contagiante',
+      positive2: 'Uma pessoa que leva a vida na seriedade',
+      positive3: 'Controla os gastos como ninguém',
+      negative1: 'Precisa melhorar essa passagem de guarda',
+      negative2: 'Faz os 100 kg do tecão',
+      negative3: 'Meia guarda do Zuruca'
+    },
+  {
     id: 23,
     name: 'Chico',
     start: new Date,
