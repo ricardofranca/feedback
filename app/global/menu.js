@@ -17,7 +17,8 @@ export default class Menu extends React.Component {
     };
 
     const bellStyle = {
-
+      position: 'absolute',
+      left: '-30px'
     }
 
     const styles = {
@@ -35,10 +36,9 @@ export default class Menu extends React.Component {
             iconClassName="fa fa-smile-o" />
         </ToolbarGroup>
         <ToolbarGroup>
-          <div className="mdl-layout--small-screen-only">
+          <div style={bellStyle} className="mdl-layout--small-screen-only">
             <IconButton
               style={buttonStyle}
-              iconStyle={bellStyle}
               iconClassName="fa fa-bell-o" />
           </div>
         </ToolbarGroup>

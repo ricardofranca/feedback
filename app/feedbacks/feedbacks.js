@@ -1,8 +1,5 @@
 import React from 'react';
-import Avatar from 'material-ui/Avatar';
-import Chip from 'material-ui/Chip';
-import Badge from 'material-ui/Badge';
-import moment from 'moment';
+import Feedback from './feedback';
 
 export default class Feedbacks extends React.Component {
 
@@ -41,46 +38,8 @@ export default class Feedbacks extends React.Component {
     }
   ]}
 
-  mapInvited = invited => {
-
-    let disabled = (invited.feedbacks)? '': '-disabled';
-    const badgeStyle = { top: 10, right: 30 }
-    if(!invited.feedbacks) {
-      badgeStyle['backgroundColor'] = '#9E9E9E';
-      disabled = '-disabled';
-    }
-
-    return <Badge
-      badgeContent={invited.feedbacks}
-      secondary={invited.feedbacks}
-      badgeStyle={badgeStyle}
-    >
-      <Chip key={`chip-invited-${invited.id}`}
-            className={`invited-chip${disabled}`} >
-        <Avatar src={invited.url} />
-        {invited.name}
-      </Chip>
-    </Badge>;
-  }
-
   mapFeedbacks = feedback => {
-
-    const invited_list = feedback.invited.map(this.mapInvited);
-    const start = moment(feedback.start).format('MMMM Do YYYY');
-    const finish = moment(feedback.finish).format('MMMM Do YYYY');
-
-    return <div key={`feedback-${feedback.id}`}  className="feedback" >
-      <div className="feedback-header">
-        <Avatar src={feedback.user.url} />
-        <div className="feedback-period">
-          {start} a {finish}
-        </div>
-      </div>
-      <div className="feedback-invited-list">
-        {invited_list}
-      </div>
-    </div>;
-
+    return <Feedback feedback={feedback} />;
   }
 
   render() {
@@ -88,10 +47,9 @@ export default class Feedbacks extends React.Component {
     const list = this.state.feedbacks.map(this.mapFeedbacks);
 
     return(
-        <div className="feedbacks">
-          {list}
-        </div>
-    )
+      <div className="feedbacks">
+        {list}
+      </div>)
   }
 
 }
