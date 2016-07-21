@@ -8,12 +8,23 @@
   max-width: 800px;
   margin: auto;
   padding: 15px;
+  margin-bottom: 10px;
 
-  .invite-positive, .invite-negative
-    font-size: 40px;
+  &-grid
+    display: flex;
 
-  .invite-negative
+    .mdl-cell.mdl-cell--6-col
+      flex-grow: 1;
+      margin: 5px;
+
+  icons = {
+    font-size: 40px
+  }
+
+  &-negative
+    {icons}
     color: #A1887F;
 
-  .invite-positive
+  &-positive
+    {icons}
     color: #2196F3;

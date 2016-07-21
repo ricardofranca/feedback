@@ -8,6 +8,7 @@ export default class Questions extends React.Component {
 
     return <TextField
       key={name}
+      fullWidth={true}
       multiLine={true}
       rows={2}
       defaultValue={this.props.invite[name]}
