@@ -5,13 +5,18 @@ import moment from 'moment';
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import Badge from 'material-ui/Badge';
+import {yellow500, blue500} from 'material-ui/styles/colors';
 
 class Feedback extends Component {
 
     mapInvited = invited => {
 
       let disabled = (invited.feedbacks)? '': '-disabled';
-      const badgeStyle = { top: 10, right: 30 }
+      const badgeStyle = { 
+        top: 10, 
+        right: 30,
+        backgroundColor: blue500
+      }
       if(!invited.feedbacks) {
         badgeStyle['backgroundColor'] = '#9E9E9E';
         disabled = '-disabled';
