@@ -1,5 +1,6 @@
 import React from 'react';
 import Invite from './invite.js';
+import fetch from 'isomorphic-fetch';
 
 export default class Invites extends React.Component {
 

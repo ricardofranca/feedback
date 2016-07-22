@@ -8,7 +8,8 @@ export default class Menu extends React.Component {
   render() {
 
     const buttonStyle = {
-      padding: 0
+      padding: 0,
+      top: '10px'
     };
 
     const iconStyle = {
