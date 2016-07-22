@@ -1,4 +1,5 @@
 import React from 'react';
+import fetch from 'isomorphic-fetch';
 import Header from './header';
 import Questions from './questions';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
