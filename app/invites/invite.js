@@ -11,7 +11,7 @@ import  {FEEDBACK_INVITES_INVITE_COMPLETED} from '../api';
 
 @connect( (state) => ({
   rest: state.rest,
-  invites: state.invites,
+  inviteOnline: state.inviteOnline,
   offline: state.offline
 }) )
 export default class Invite extends React.Component {
@@ -22,7 +22,7 @@ export default class Invite extends React.Component {
       const params = {
         id: this.props.params.id
       };
-      dispatch(rest.actions.invites.get(params));
+      dispatch(rest.actions.inviteOnline.get(params));
     }
 
   }
@@ -92,8 +92,8 @@ export default class Invite extends React.Component {
 
     let invite = this.props.invite;
 
-    if( !invite && this.props.invites.data.length) {
-      invite = this.props.invites.data[0];
+    if( !invite && this.props.inviteOnline.data.length) {
+      invite = this.props.inviteOnline.data[0];
     }
 
     if( invite ) {
