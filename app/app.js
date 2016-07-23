@@ -43,6 +43,7 @@ class App extends React.Component {
             {profile}
             {this.props.children}
           </main>
+
         </div>
       </MuiThemeProvider>
     )

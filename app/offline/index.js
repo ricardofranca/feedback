@@ -11,7 +11,7 @@ export default function middlewareInvite({ getState }) {
 
         let returnValue;
 
-        let offline = true;
+        let offline = !navigator.onLine;
         if( offline &&
             action.type === FEEDBACK_INVITES_INVITE_COMPLETED) {
             returnValue = dispatch({

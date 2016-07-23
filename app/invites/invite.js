@@ -72,7 +72,7 @@ export default class Invite extends React.Component {
   verifyOffline = () => {
     if(this.props.offline) {
       console.log("Offline maxu");
-
+debugger;
       //let invite = this.props.invite;
       //database.insert('invite', invite);
 
