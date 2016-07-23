@@ -3,8 +3,19 @@ import fetch from 'isomorphic-fetch';
 import {transformers} from 'redux-api';
 
 const invitesMapping = {
-    invites: {
+    inviteOnline: {
         url: '/invites/:id.json',
+        crud: true,
+        transformer: transformers.array,
+        options: {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }
+    },
+    invites: {
+        url: '/invites.json',
         crud: true,
         transformer: transformers.array,
         options: {
