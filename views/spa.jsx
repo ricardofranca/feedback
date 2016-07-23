@@ -13,6 +13,7 @@ export default class SinglePageApplication extends React.Component {
                         <div className="rect5"></div>
                     </div>
                 </div>
+                <script src="/assets/js/localstoragedb.min.js" />
                 <script src="/assets/js/bundle.js" />
             </div>
         );

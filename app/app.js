@@ -8,6 +8,7 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import thunkMiddleware from 'redux-thunk';
 import rest from './restful';
 
+import api from './api';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -19,6 +20,9 @@ import Profile from './profile';
 import Invites from './invites/invites.js';
 import Invite from './invites/invite.js';
 import Feedbacks from './feedbacks/feedbacks.js';
+
+import database from './database';
+import middlewareInvite from './offline';
 
 injectTapEventPlugin();
 
@@ -46,26 +50,18 @@ class App extends React.Component {
 
 }
 
-function invitesReducer(state, action) {
-  if (typeof state === 'undefined') {
-    state = { data: []}
-  }
-
-
-  return state;
-}
-
 class Root extends React.Component {
   render() {
 
     const reducer = combineReducers({
+      ...api,
       routing: routerReducer,
       rest: () => rest,
       ...rest.reducers
     });
 
     const store = compose(
-        applyMiddleware(thunkMiddleware)
+        applyMiddleware(thunkMiddleware, middlewareInvite)
     )(createStore)(reducer);
 
     const history = syncHistoryWithStore(browserHistory, store);
