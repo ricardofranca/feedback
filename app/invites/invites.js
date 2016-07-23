@@ -2,22 +2,15 @@ import React from 'react';
 import Invite from './invite.js';
 import fetch from 'isomorphic-fetch';
 
+@connect( (state) => ({
+  rest: state.rest,
+  invites: state.invites
+}) )
 export default class Invites extends React.Component {
 
-  state = { invites: [] }
-
   componentDidMount() {
-
-    fetch('/invites.json').then(
-      res => res.json().then( this.refreshList )
-    );
-
-  }
-
-  refreshList = list => {
-    this.setState({
-      invites: list
-    });
+    const {dispatch, rest} = this.props;
+    dispatch(rest.actions.invitesRest.sync());
   }
 
   mapInvites = invite => {
@@ -26,7 +19,7 @@ export default class Invites extends React.Component {
 
   render() {
 
-    const list = this.state.invites.map(this.mapInvites);
+    const list = this.props.invites.data.map(this.mapInvites);
 
     return(
         <div className="invites">
