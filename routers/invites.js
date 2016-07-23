@@ -58,13 +58,11 @@ export default class Invites {
       return a;
     }, {});
 
-    console.log("*****", req.params, req.body);
+    console.log("*****", req.params, req.query);
 
-    Object.keys(req.body).forEach(function(key){
-      let value = req.body[key];
-      if(key != req.params.id) {
-        invite[key] = value;
-      }
+    Object.keys(req.query).forEach(function(key){
+      let value = req.query[key];
+      invite[key] = value;
     })
 
     res.send([invite]);
