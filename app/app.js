@@ -1,6 +1,14 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
+
+import { createStore, compose, combineReducers, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
+import thunkMiddleware from 'redux-thunk';
+import rest from './restful';
+
+
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -38,16 +46,40 @@ class App extends React.Component {
 
 }
 
+function invitesReducer(state, action) {
+  if (typeof state === 'undefined') {
+    state = { data: []}
+  }
+
+
+  return state;
+}
+
 class Root extends React.Component {
   render() {
+
+    const reducer = combineReducers({
+      routing: routerReducer,
+      rest: () => rest,
+      ...rest.reducers
+    });
+
+    const store = compose(
+        applyMiddleware(thunkMiddleware)
+    )(createStore)(reducer);
+
+    const history = syncHistoryWithStore(browserHistory, store);
+
     return (
-      <Router history={browserHistory}>
-        <Route path="/" component={App}>
-          <Route path="/feedbacks" component={Feedbacks} />
-          <Route path="/invites" component={Invites} />
-          <Route path="/invites/:id" component={Invite}/>
-        </Route>
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <Route path="/" component={App}>
+            <Route path="/feedbacks" component={Feedbacks} />
+            <Route path="/invites" component={Invites} />
+            <Route path="/invites/:id" component={Invite}/>
+          </Route>
+        </Router>
+      </Provider>
     )
   }
 }
