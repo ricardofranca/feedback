@@ -3,8 +3,8 @@ import fetch from 'isomorphic-fetch';
 import {transformers} from 'redux-api';
 
 const invitesMapping = {
-    invitesRest: {
-        url: '/invites/:id',
+    invites: {
+        url: '/invites.json/:id',
         crud: true,
         transformer: transformers.array,
         options: {
