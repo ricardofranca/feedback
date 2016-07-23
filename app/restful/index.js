@@ -24,6 +24,17 @@ const invitesMapping = {
                 'Content-Type': 'application/json'
             }
         }
+    },
+    feedbacks: {
+        url: '/feedbacks.json',
+        crud: true,
+        transformer: transformers.array,
+        options: {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }
     }
 };
 

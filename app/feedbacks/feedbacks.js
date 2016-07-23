@@ -1,55 +1,31 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Feedback from './feedback';
 
+@connect( (state) => ({
+  rest: state.rest,
+  feedbacks: state.feedbacks
+}) )
 export default class Feedbacks extends React.Component {
 
-  state = {
-    feedbacks: [
-    {
-      id: 30,
-      start: new Date,
-      finish: new Date,
-      description: 'convido você para me dar um Feedback sobre que gostaria que eu melhorasse como pessoa e no que você gosta de mim e gostaria que nunca perdesse.',
-      user: {
-        id: 1,
-        url: "https://igcdn-photos-a-a.akamaihd.net/hphotos-ak-xaf1/t51.2885-19/11098716_801734869909168_1095953541_a.jpg",
-        name: "Christiano Milfont"
-      },
-      invited: [
-        {
-          id: 167,
-          name: "Francisco Barroso",
-          url: 'https://pbs.twimg.com/profile_images/85884918/barroso_200x200.JPG',
-          feedbacks: 6
-        },
-        {
-          id: 200,
-          name: "Lucas Teixeira",
-          url: 'https://igcdn-photos-d-a.akamaihd.net/hphotos-ak-xta1/t51.2885-19/s150x150/12940679_947840045330987_82550338_a.jpg',
-          feedbacks: 3
-        },
-        {
-          id: 224,
-          name: "Rafael Ponte",
-          url: 'https://pbs.twimg.com/profile_images/504685130191867904/OFE6pmSN_400x400.jpeg',
-          feedbacks: 0
-        }
-      ]
-    }
-  ]}
+  componentDidMount() {
+    const {dispatch, rest} = this.props;
+    dispatch(rest.actions.feedbacks.sync());
+  }
 
   mapFeedbacks = feedback => {
-    return <Feedback feedback={feedback} />;
+    return <Feedback key={`invite-${feedback.id}`} feedback={feedback} />
   }
 
   render() {
 
-    const list = this.state.feedbacks.map(this.mapFeedbacks);
+    const list = this.props.feedbacks.data.map(this.mapFeedbacks);
 
     return(
-      <div className="feedbacks">
-        {list}
-      </div>)
+        <div className="feedbacks">
+            {list}
+        </div>
+    )
   }
 
 }
