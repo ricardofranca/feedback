@@ -49,7 +49,7 @@ export default class Invites {
       return a;
     }, {});
 
-    res.send(invite);
+    res.send([invite]);
   }
 
   save(req, res) {
@@ -58,12 +58,16 @@ export default class Invites {
       return a;
     }, {});
 
+    console.log("*****", req.params, req.body);
+
     Object.keys(req.body).forEach(function(key){
       let value = req.body[key];
-      invite[key] = value;
+      if(key != req.params.id) {
+        invite[key] = value;
+      }
     })
 
-    res.send({});
+    res.send([invite]);
   }
 
   constructor(app, models) {

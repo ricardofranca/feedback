@@ -1,8 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import IconButton from 'material-ui/IconButton';
 import {yellow500} from 'material-ui/styles/colors';
 import {Toolbar, ToolbarGroup, ToolbarSeparator} from 'material-ui/Toolbar';
 
+@connect( (state) => ({
+  bellNotify: state.bellNotify
+}) )
 export default class Menu extends React.Component {
 
   render() {

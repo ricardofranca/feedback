@@ -4,7 +4,7 @@ import {transformers} from 'redux-api';
 
 const invitesMapping = {
     invites: {
-        url: '/invites.json/:id',
+        url: '/invites/:id.json',
         crud: true,
         transformer: transformers.array,
         options: {

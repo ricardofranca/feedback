@@ -1,54 +1,54 @@
 import React from 'react';
-import fetch from 'isomorphic-fetch';
+import { connect } from 'react-redux';
+
+import { async } from 'redux-api';
+
 import Header from './header';
 import Questions from './questions';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 
+import  {FEEDBACK_INVITES_INVITE_COMPLETED} from '../api';
+
+@connect( (state) => ({
+  rest: state.rest,
+  invites: state.invites,
+  offline: state.offline
+}) )
 export default class Invite extends React.Component {
-
-  state = { invite: {} }
-
-  constructor(props) {
-    super(props);
-
-    if(this.props.invite) {
-      this.state.invite = this.props.invite;
-    }
-
-  }
 
   componentDidMount() {
     if(!this.props.invite) {
-      fetch(`/invites/${this.props.params.id}.json`).then(
-        res => res.json().then( this.refresh )
-      );
+      const {dispatch, rest} = this.props;
+      const params = {
+        id: this.props.params.id
+      };
+      dispatch(rest.actions.invites.get(params));
     }
 
   }
 
-  refresh = item => {
-    this.setState({invite: item});
+  completeVerify = () => {
+      this.props.dispatch({ type: FEEDBACK_INVITES_INVITE_COMPLETED });
   }
 
   update = (ev, value) => {
 
+    const {dispatch, rest} = this.props;
+    let params = {
+      id: this.props.params.id
+    };
+
     const el = ev.currentTarget.name;
-    const json = {};
-    json[el] = value;
-    fetch(`/invites/${this.state.invite.id}.json`, {
-      method: 'PUT',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(json)
-    });
+    params[el] = value;
+
+    let action = (cb)=> rest.actions.invites.put( params, cb);
+
+    async(dispatch, action, this.completeVerify.bind(this));
 
   }
 
-  formatStatus = () => {
+  formatStatus = (invite) => {
     const status = {};
-    const invite = this.state.invite;
     const count = [ 'positive1',
         'positive2',
         'positive3',
@@ -69,14 +69,39 @@ export default class Invite extends React.Component {
     return status;
   }
 
+  verifyOffline = () => {
+    if(this.props.offline) {
+      console.log("Offline maxu");
+
+      //let invite = this.props.invite;
+      //database.insert('invite', invite);
+
+    }
+  }
+
   render() {
 
-    const invite = this.state.invite;
-    const name = (invite)? invite.name: '';
-    const {url} = invite;
+    this.verifyOffline();
+
     const onChange = this.update.bind(this);
 
-    const statusStyles = this.formatStatus();
+    let name = '';
+    let url = '';
+    let statusStyles = {};
+    let questions = <div></div>;
+
+    let invite = this.props.invite;
+
+    if( !invite && this.props.invites.data.length) {
+      invite = this.props.invites.data[0];
+    }
+
+    if( invite ) {
+      name = invite.name;
+      url =  invite.url;
+      statusStyles = this.formatStatus(invite);
+      questions = <Questions invite={invite} onChange={onChange} />
+    }
 
     const inviteText = `${name} o convida para dar um Feedback sobre o que voce admiria que ele pretende conservar e melhorar o que pode te incomodar`;
 
@@ -87,9 +112,7 @@ export default class Invite extends React.Component {
           subtitle="16 de jul a 20 de jul"
           avatar={url}
         />
-        <CardText>
-          <Questions invite={this.state.invite} onChange={onChange} />
-        </CardText>
+        <CardText> {questions} </CardText>
       </Card>
     )
   }
