@@ -1,6 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Invite from './invite.js';
-import fetch from 'isomorphic-fetch';
 
 @connect( (state) => ({
   rest: state.rest,
@@ -10,7 +10,7 @@ export default class Invites extends React.Component {
 
   componentDidMount() {
     const {dispatch, rest} = this.props;
-    dispatch(rest.actions.invitesRest.sync());
+    dispatch(rest.actions.invites.sync());
   }
 
   mapInvites = invite => {
