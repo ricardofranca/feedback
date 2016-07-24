@@ -41,7 +41,7 @@ export default class Invite extends React.Component {
     const el = ev.currentTarget.name;
     params[el] = value;
 
-    let action = (cb)=> rest.actions.invites.put( params, cb);
+    let action = (cb)=> rest.actions.inviteOnline.put( params, cb);
 
     async(dispatch, action, this.completeVerify.bind(this));
 

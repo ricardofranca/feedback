@@ -9,17 +9,17 @@ export default function middlewareInvite({ getState }) {
 
         console.log('action original', action);
 
-        let returnValue;
+        let returnValue = dispatch(action);
 
-        let offline = !navigator.onLine;
-        if( offline &&
-            action.type === FEEDBACK_INVITES_INVITE_COMPLETED) {
-            returnValue = dispatch({
-                type: FEEDBACK_OFFLINE
-            });
-        } else {
-            returnValue = dispatch(action);
-        }
+        //let offline = !navigator.onLine;
+        //if( offline &&
+        //    action.type === FEEDBACK_INVITES_INVITE_COMPLETED) {
+        //    returnValue = dispatch({
+        //        type: FEEDBACK_OFFLINE
+        //    });
+        //} else {
+        //    returnValue = dispatch(action);
+        //}
 
         let state = getState();
 

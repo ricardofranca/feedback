@@ -19,7 +19,7 @@ function offline(state, action) {
   }
 
   if(action.type === FEEDBACK_OFFLINE) {
-    state = true;
+    state = action.payload;
   }
 
   return state;

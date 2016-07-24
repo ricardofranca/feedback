@@ -39,7 +39,8 @@ const invitesMapping = {
 };
 
 const rest = reduxApi(invitesMapping).use('fetch', (url, opts)=> {
-  return fetch(url, opts).then((r)=> r.json().then(
+  return fetch(url, opts).then((r)=>
+      r.status !== 204 ? r.json().then(
     (d)=> new Promise(
       (resolve, reject)=> {
         if (r.status >= 200 && r.status < 300) {
@@ -48,7 +49,7 @@ const rest = reduxApi(invitesMapping).use('fetch', (url, opts)=> {
           reject(d);
         }
       }
-    )));
+    )) : {} );
 });
 
 export default rest;

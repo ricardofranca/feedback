@@ -1,3 +1,31 @@
+import  { FEEDBACK_OFFLINE } from './api';
+
+class OnlineOffline {
+
+  type = 'online';
+
+  constructor(store) {
+    this.store = store;
+    window.addEventListener('load', function() {
+      window.addEventListener('online',  this.updateStatus.bind(this));
+      window.addEventListener('offline', this.updateStatus.bind(this));
+    }.bind(this));
+  }
+
+  register = () => {
+    console.log("Qual evento?", this.type);
+  }
+
+  updateStatus = (event) => {
+    this.type = event.type;
+    this.store.dispatch({
+      type: FEEDBACK_OFFLINE,
+      payload: this.type === 'offline'
+    });
+  }
+
+}
+
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
@@ -43,7 +71,6 @@ class App extends React.Component {
             {profile}
             {this.props.children}
           </main>
-
         </div>
       </MuiThemeProvider>
     )
@@ -65,6 +92,10 @@ class Root extends React.Component {
         applyMiddleware(thunkMiddleware, middlewareInvite)
     )(createStore)(reducer);
 
+    const online = new OnlineOffline(store);
+
+    store.subscribe(online.register.bind(online));
+
     const history = syncHistoryWithStore(browserHistory, store);
 
     return (
@@ -75,6 +106,7 @@ class Root extends React.Component {
             <Route path="/invites" component={Invites} />
             <Route path="/invites/:id" component={Invite}/>
           </Route>
+          <Route path="/index.html" component={App} />
         </Router>
       </Provider>
     )
