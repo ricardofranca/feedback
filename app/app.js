@@ -1,31 +1,3 @@
-import  { FEEDBACK_OFFLINE } from './api';
-
-class OnlineOffline {
-
-  type = 'online';
-
-  constructor(store) {
-    this.store = store;
-    window.addEventListener('load', function() {
-      window.addEventListener('online',  this.updateStatus.bind(this));
-      window.addEventListener('offline', this.updateStatus.bind(this));
-    }.bind(this));
-  }
-
-  register = () => {
-    console.log("Qual evento?", this.type);
-  }
-
-  updateStatus = (event) => {
-    this.type = event.type;
-    this.store.dispatch({
-      type: FEEDBACK_OFFLINE,
-      payload: this.type === 'offline'
-    });
-  }
-
-}
-
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
@@ -50,7 +22,7 @@ import Invite from './invites/invite.js';
 import Feedbacks from './feedbacks/feedbacks.js';
 
 import database from './database';
-import middlewareInvite from './offline';
+import OfflineWorker from './offline';
 
 injectTapEventPlugin();
 
@@ -89,12 +61,12 @@ class Root extends React.Component {
     });
 
     const store = compose(
-        applyMiddleware(thunkMiddleware, middlewareInvite)
+        applyMiddleware(thunkMiddleware)
     )(createStore)(reducer);
 
-    const online = new OnlineOffline(store);
+    const offline = new OfflineWorker(store);
 
-    store.subscribe(online.register.bind(online));
+    store.subscribe(offline.register.bind(offline));
 
     const history = syncHistoryWithStore(browserHistory, store);
 

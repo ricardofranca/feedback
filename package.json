@@ -85,12 +85,13 @@
   "scripts": {
     "postinstall": "sequelize db:migrate",
     "verify:js": "eslint ./app/",
-    "watch:css": "stylus -w -c -u ./node_modules/poststylus --with \"['postcss-opacity','postcss-cssnext']\" styles/main.styl -o public/assets/css/main.css",
+    "watch:css": "stylus -w -u ./node_modules/poststylus --with \"['postcss-opacity','postcss-cssnext']\" styles/main.styl -o public/assets/css/main.css",
     "watch:js": "watchify -o public/assets/js/bundle.js -v -d app/app.js",
     "build:js": "browserify app/app.js -o public/assets/js/bundle.min.js -t babelify -t [uglifyify --no-sourcemap --no-bundle-external]",
-    "watch:all": "parallelshell 'npm run watch:js' 'npm run watch:css'",
+    "watch:all": "parallelshell 'npm run watch:js' 'npm run watch:css' 'npm run offline' ",
     "dev": "parallelshell 'npm start' 'npm run watch:all' ",
-    "start": "node -r babel-register index.js"
+    "start": "node -r babel-register index.js",
+    "offline": "node -r babel-register update_version.js "
   },
   "browserify": {
     "transform": [
