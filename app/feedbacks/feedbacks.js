@@ -1,16 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Feedback from './feedback';
+import { FEEDBACK_LIST_REQUEST } from '../api';
 
 @connect( (state) => ({
-  rest: state.rest,
   feedbacks: state.feedbacks
 }) )
 export default class Feedbacks extends React.Component {
 
   componentDidMount() {
-    const {dispatch, rest} = this.props;
-    dispatch(rest.actions.feedbacks.sync());
+    const {dispatch} = this.props;
+
+    dispatch(function(next, getState){
+
+      const state = getState();
+
+      next({
+        dispatch: next,
+        type: FEEDBACK_LIST_REQUEST,
+        payload: state
+      });
+
+      return state;
+    });
+
   }
 
   mapFeedbacks = feedback => {

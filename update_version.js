@@ -17,8 +17,6 @@ function updateVersion() {
             return `\$\{${new Date().getTime()}\}`;
       });
 
-      console.log('content => ', content);
-
       fs.writeFile(dest, content, 'utf8', function (err) {
          if (err) return console.log(err);
       });

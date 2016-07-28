@@ -4,7 +4,7 @@ export default class DefaultLayout extends React.Component {
   render() {
 
     return (
-      <html manifest="/offline.appcache">
+      <html>
 
         <head>
           <meta charset="utf-8"/>

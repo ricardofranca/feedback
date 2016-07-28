@@ -54,19 +54,18 @@ class Root extends React.Component {
   render() {
 
     const reducer = combineReducers({
-      ...api,
       routing: routerReducer,
-      rest: () => rest,
-      ...rest.reducers
+      ...api
     });
 
-    const store = compose(
-        applyMiddleware(thunkMiddleware)
-    )(createStore)(reducer);
+    const store = createStore(
+      reducer,
+      applyMiddleware(thunkMiddleware)
+    );
 
-    const offline = new OfflineWorker(store);
-
-    store.subscribe(offline.register.bind(offline));
+    // const offline = new OfflineWorker(store);
+    //
+    // store.subscribe(offline.register.bind(offline));
 
     const history = syncHistoryWithStore(browserHistory, store);
 

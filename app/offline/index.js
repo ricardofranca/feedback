@@ -1,5 +1,7 @@
 import  { FEEDBACK_OFFLINE } from '../api';
 
+
+//consultar chrome://appcache-internals/
 export default class OfflineWorker {
 
   type = 'online';
