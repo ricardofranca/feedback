@@ -1,6 +1,48 @@
+import fetch from 'isomorphic-fetch';
+import { takeEvery } from 'redux-saga';
+import { call, put } from 'redux-saga/effects';
+
+const NAMESPACE = "PRFEEDBACK";
+
 export const FEEDBACK_INVITES_INVITE_COMPLETED = "FEEDBACK_INVITES_INVITE_COMPLETED";
 export const FEEDBACK_OFFLINE = 'FEEDBACK_OFFLINE';
-export const FEEDBACK_LIST_REQUEST = 'FEEDBACK_LIST_REQUEST';
+
+const STATUS = ['REQUEST','SUCCESS','FAILURE'];
+
+const createRequestTypes = base => STATUS.reduce((acc, type) => {
+  acc[type] = `${NAMESPACE}_${base}_${type}`
+  return acc
+}, {});
+
+export const FEEDBACKS = createRequestTypes('FEEDBACKS');
+
+const action = (type, payload = {}) => {
+  return {type, ...payload}
+};
+
+const actions = {
+  success: (payload) => action(FEEDBACKS.SUCCESS, {payload}),
+  failure: (error) => action(FEEDBACKS.FAILURE, {error}),
+};
+
+function fetchList() {
+    return fetch(`/feedbacks.json` )
+            .then(response => response.json() )
+            .then(json => json )
+}
+
+function* fetchFeedbacks() {
+    try {
+       const feedbacks = yield call(fetchList);
+       yield put(actions.success(feedbacks));
+    } catch (e) {
+       yield put(actions.failure({message: e.message}));
+    }
+}
+
+export function* sagas() {
+  yield* takeEvery(FEEDBACKS.REQUEST, fetchFeedbacks)
+}
 
 function bellNotify(state, action) {
   if (typeof state === 'undefined') {
@@ -26,32 +68,18 @@ function offline(state, action) {
   return state;
 };
 
-function feedbacks(state, action) {
+const feedbacksReducer = (state, action) => {
+  if(!state) return [];
 
-  const initialState = {
-    data: []
-  };
-
-  const options = {
-      headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-      }
-  };
-
-  console.log(state, action);
-  if(!state) return initialState;
-
-  if(action.type === FEEDBACK_LIST_REQUEST) {
-    state = action.payload.feedbacks;
+  if(action.type === FEEDBACKS.SUCCESS) {
+    return action.payload;
   }
 
   return state;
-
 };
 
 export default {
   offline: offline,
   bellNotify: bellNotify,
-  feedbacks: feedbacks
+  feedbacks: feedbacksReducer
 };

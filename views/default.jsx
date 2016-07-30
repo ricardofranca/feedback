@@ -3,8 +3,13 @@ import React from 'react';
 export default class DefaultLayout extends React.Component {
   render() {
 
+    const config = {};
+    if(process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'offline') {
+      config['manifest'] = "/offline.appcache";
+    }
+
     return (
-      <html>
+      <html {...config}>
 
         <head>
           <meta charset="utf-8"/>

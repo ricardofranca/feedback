@@ -1,28 +1,30 @@
+import "babel-polyfill";
+
 import ReactDOM from 'react-dom';
 import React from 'react';
-import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
+import { Router, Route, browserHistory } from 'react-router';
 
-import { createStore, compose, combineReducers, applyMiddleware } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
-import thunkMiddleware from 'redux-thunk';
-import rest from './restful';
 
-import api from './api';
+import createSagaMiddleware from 'redux-saga';
+
+import api, {sagas} from 'api';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import FeedbacksTheme from './theme';
+import FeedbacksTheme from 'theme';
 import Menu from './global/menu.js';
 import Profile from './profile';
 
-import Invites from './invites/invites.js';
-import Invite from './invites/invite.js';
-import Feedbacks from './feedbacks/feedbacks.js';
+import Invites from 'invites/invites.js';
+import Invite from 'invites/invite.js';
+import Feedbacks from 'feedbacks/feedbacks.js';
 
-import database from './database';
-import OfflineWorker from './offline';
+import database from 'database';
+import OfflineWorker from 'offline';
 
 injectTapEventPlugin();
 
@@ -53,6 +55,8 @@ class App extends React.Component {
 class Root extends React.Component {
   render() {
 
+    const sagaMiddleware = createSagaMiddleware();
+
     const reducer = combineReducers({
       routing: routerReducer,
       ...api
@@ -60,11 +64,12 @@ class Root extends React.Component {
 
     const store = createStore(
       reducer,
-      applyMiddleware(thunkMiddleware)
+      applyMiddleware(sagaMiddleware)
     );
 
+    sagaMiddleware.run(sagas);
+
     // const offline = new OfflineWorker(store);
-    //
     // store.subscribe(offline.register.bind(offline));
 
     const history = syncHistoryWithStore(browserHistory, store);

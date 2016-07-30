@@ -1,5 +1,4 @@
-import  { FEEDBACK_OFFLINE } from '../api';
-
+import  { FEEDBACK_OFFLINE } from 'api';
 
 //consultar chrome://appcache-internals/
 export default class OfflineWorker {
@@ -11,29 +10,29 @@ export default class OfflineWorker {
 
     const appCache = window.applicationCache;
 
-    if( appCache.status > appCache.UNCACHED ) {
-      appCache.update();
-    }
-
     window.addEventListener('load', function () {
       window.addEventListener('online', this.updateStatus.bind(this));
       window.addEventListener('offline', this.updateStatus.bind(this));
-      window.applicationCache.addEventListener('updateready', this.updateVersion.bind(this));
+
+      if( appCache.status > appCache.UNCACHED ) {
+        appCache.addEventListener('updateready', this.updateVersion.bind(this));
+        appCache.update();
+      }
+
     }.bind(this));
   }
 
   updateVersion = () => {
-    if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
-      appCache.swapCache();
-      window.location.reload();
-    }
+    const {applicationCache, location} = window;
+    applicationCache.swapCache();
+    location.reload();
   }
 
   register = () => {
-    console.log("Qual evento?", this.type);
+    console.log("Qual evento?", this.type, arguments);
     let state = this.store.getState();
 
-
+    console.log("state", state);
 
     if( state.offline ) {
       debugger;
