@@ -69,8 +69,8 @@ class Root extends React.Component {
 
     sagaMiddleware.run(sagas);
 
-    // const offline = new OfflineWorker(store);
-    // store.subscribe(offline.register.bind(offline));
+    const offline = new OfflineWorker(store);
+    store.subscribe(offline.register.bind(offline));
 
     const history = syncHistoryWithStore(browserHistory, store);
 
