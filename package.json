@@ -1,7 +1,7 @@
 {
   "name": "feedback",
   "version": "0.0.1",
-  "description": "Um produto para obter feedbacks e atingir objetivos.",
+  "description": "Um produto para obter Feedbacks e atingir objectivos pessoais.",
   "private": true,
   "engines": {
     "node": "5.11.0"
@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/cmilfont/feedback/issues"
   },
-  "homepage": "http://feedback.herokuapp.com/",
+  "homepage": "http://prfeedback.herokuapp.com/",
   "dependencies": {
     "babel": "^6.5.2",
     "babel-cli": "^6.6.5",
@@ -34,6 +34,7 @@
     "connect-multiparty": "^2.0.0",
     "cookie-parser": "^1.4.1",
     "elasticsearch": "^11.0.1",
+    "eslint": "^3.2.2",
     "express": "^4.13.4",
     "express-react-views": "^0.10.0",
     "express-session": "^1.13.0",
@@ -42,6 +43,7 @@
     "moment": "^2.12.0",
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
+    "passport-google-oauth": "^1.0.0",
     "passport-local": "^1.0.0",
     "pg": "^4.5.1",
     "pg-hstore": "^2.3.2",
@@ -67,9 +69,11 @@
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
     "envify": "^3.4.0",
-    "eslint": "^2.7.0",
-    "eslint-plugin-jsx-a11y": "^0.6.2",
-    "eslint-plugin-react": "^4.3.0",
+    "eslint": "^3.2.0",
+    "eslint-config-airbnb": "^10.0.0",
+    "eslint-plugin-jsx-a11y": "^2.0.1",
+    "eslint-plugin-react": "^6.0.0",
+    "faker": "^3.1.0",
     "imagemin": "^5.1.1",
     "imagemin-cli": "^2.1.0",
     "imagemin-mozjpeg": "^6.0.0",
@@ -87,8 +91,8 @@
     "postinstall": "sequelize db:migrate",
     "verify:js": "eslint ./app/",
     "watch:css": "stylus -w -u ./node_modules/poststylus --with \"['postcss-opacity','postcss-cssnext']\" styles/main.styl -o public/assets/css/main.css",
-    "watch:js": "watchify -o public/assets/js/bundle.js -v -d app/app.js",
-    "build:js": "browserify app/app.js -o public/assets/js/bundle.min.js -t babelify -t [uglifyify --no-sourcemap --no-bundle-external]",
+    "watch:js": "watchify -o public/assets/js/bundle.js -v -d app/app.jsx",
+    "build:js": "browserify app/app.jsx -o public/assets/js/bundle.min.js -t babelify -t [uglifyify --no-sourcemap --no-bundle-external]",
     "watch:all": "parallelshell 'npm run watch:js' 'npm run watch:css' 'npm run offline' ",
     "dev": "parallelshell 'npm start' 'npm run watch:all' ",
     "start": "node -r babel-register index.js",

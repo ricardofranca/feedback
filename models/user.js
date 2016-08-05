@@ -3,6 +3,7 @@ var crypto = require('crypto');
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define('User', {
     username: DataTypes.STRING,
+    name: DataTypes.STRING,
     hash: DataTypes.STRING,
     salt: DataTypes.STRING,
     email: DataTypes.STRING,
@@ -40,3 +41,44 @@ module.exports = function(sequelize, DataTypes) {
   });
   return User;
 };
+
+/*
+const faker = require('faker');
+
+var user = {
+  username: 'internet.userName',
+  name: 'name.findName',
+  email: 'internet.email',
+  verified: 'random.boolean'
+}
+
+
+const factory = (count, model) => {
+  var models = [];
+
+  function* build(){
+
+    let index = 1;
+    while(true) {
+      let dummy = Object.assign({}, model);
+      Object.keys(dummy).forEach(
+        key => {
+          dummy[key] = faker.fake(`{{${dummy[key]}}}`)
+        }
+      )
+      models.push(dummy);
+      yield index++;
+    }
+
+  }
+
+  for( let index of build()) {
+    console.log(index, models.length);
+    if(index === count) break;
+  }
+
+  return models;
+}
+
+factory(10, user);
+*/

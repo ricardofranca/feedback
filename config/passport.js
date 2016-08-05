@@ -4,7 +4,22 @@ var passport = require('passport'),
     bodyParser = require('body-parser'),
     Strategy = require('passport-local').Strategy;
 
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+
 module.exports = function (express, app, path, models) {
+
+    passport.use(new GoogleStrategy({
+        clientID: "629615248081-rdtufu661otp2h19g4foio3143ivj36v.apps.googleusercontent.com",
+        clientSecret: "Xiwb_WVHILHoav-fISylvc-3",
+        callbackURL: "http://www.example.com/auth/google/callback"
+      },
+      function(accessToken, refreshToken, profile, done) {
+
+          models.User.findOrCreate({ googleId: profile.id }, function (err, user) {
+             return done(err, user);
+           });
+      }
+    ));
 
     passport.use(new Strategy(
         function (username, password, done) {
