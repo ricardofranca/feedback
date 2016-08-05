@@ -15,7 +15,7 @@ class Invites extends React.Component {
   mapInvites = invite => <Invite key={`invite-${invite.id}`} invite={invite} />
 
   render() {
-    debugger;
+
     const list = this.props.invites.map(this.mapInvites);
 
     return (

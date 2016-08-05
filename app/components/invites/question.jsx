@@ -38,7 +38,7 @@ Question.propTypes = {
   name: React.PropTypes.string,
   iconClassName: React.PropTypes.string,
   invite: React.PropTypes.object,
-  onChange: React.PropTypes.func,
+  onChange: React.PropTypes.any,
 };
 
 export default Question;

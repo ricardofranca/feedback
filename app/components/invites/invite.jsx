@@ -50,22 +50,12 @@ class Invite extends React.Component {
 
   render() {
     this.verifyOffline();
+    const { invite } = this.props;
 
-    let name = '';
-    let url = '';
-    let statusStyles = {};
-    let questions = <div />;
+    const statusStyles = this.formatStatus(invite);
+    const questions = <Questions invite={invite} onChange={this.update} />;
 
-    let invite = this.props.invite;
-
-    if (invite) {
-      name = invite.name;
-      url = invite.url;
-      statusStyles = this.formatStatus(invite);
-      questions = <Questions invite={invite} onChange={this.update} />;
-    }
-
-    const inviteText = `${name} o convida para dar um
+    const inviteText = `${invite.name} o convida para dar um
     Feedback sobre o que voce admiria que ele pretende
     conservar e melhorar o que pode te incomodar`;
 
@@ -74,7 +64,7 @@ class Invite extends React.Component {
         <CardHeader
           title={inviteText}
           subtitle="16 de jul a 20 de jul"
-          avatar={url}
+          avatar={invite.url}
         />
         <CardText> {questions} </CardText>
       </Card>
@@ -85,7 +75,6 @@ class Invite extends React.Component {
 
 Invite.propTypes = {
   dispatch: React.PropTypes.func,
-  feedbacks: React.PropTypes.any,
   invite: React.PropTypes.object,
   offline: React.PropTypes.bool,
   params: React.PropTypes.object,
