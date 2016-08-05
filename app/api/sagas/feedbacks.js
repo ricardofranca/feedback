@@ -2,20 +2,7 @@ import fetch from 'isomorphic-fetch';
 import { takeEvery } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
-import { FEEDBACKS } from 'api/actions';
-
-const action = (type, payload = {}) => {
-  const json = {
-    type,
-    ...payload,
-  };
-  return json;
-};
-
-const actions = {
-  success: (payload) => action(FEEDBACKS.SUCCESS, { payload }),
-  failure: (error) => action(FEEDBACKS.FAILURE, { error }),
-};
+import { FEEDBACKS, actions } from 'api/actions';
 
 function fetchList() {
   return fetch('/feedbacks.json')
@@ -24,14 +11,15 @@ function fetchList() {
 }
 
 function* fetchFeedbacks() {
+  const action = actions(FEEDBACKS);
   try {
     const list = yield call(fetchList);
-    yield put(actions.success(list));
+    yield put(action.success(list));
   } catch (e) {
-    yield put(actions.failure({ message: e.message }));
+    yield put(action.failure({ message: e.message }));
   }
 }
 
-export default function* feedbacks() {
+export default function* watchFeedbacks() {
   yield* takeEvery(FEEDBACKS.REQUEST, fetchFeedbacks);
 }

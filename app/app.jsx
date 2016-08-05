@@ -24,8 +24,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import api from 'api';
 /* Componentes iniciais e das rotas */
 import Base from 'components/base.jsx';
-//import Invites from 'components/invites/invites.jsx';
-//import Feedbacks from 'components/feedbacks/feedbacks.jsx';
+import Invites from 'components/invites/invites.jsx';
+import Feedbacks from 'components/feedbacks/feedbacks.jsx';
 /* Nossa API que vai gerenciar quando a app estiver offline */
 import OfflineWorker from 'offline';
 /* Executamos no início para habilitar pro sistema inteiro */
@@ -47,7 +47,7 @@ function Root() {
     applyMiddleware(sagaMiddleware)
   );
   /* Applica o Middleware pra carregar os "observers" das sagas */
-  sagaMiddleware.run(api.sagas.feedbacks);
+  sagaMiddleware.run(api.sagas);
   /* Nossa API offline vai ficar escutando e atualiza o cache no início da app */
   const offline = new OfflineWorker(store);
   store.subscribe(offline.register.bind(offline));
@@ -55,7 +55,7 @@ function Root() {
     gerenciados pelos dois recebem os dados da route/url nos props
    */
   const history = syncHistoryWithStore(browserHistory, store);
-
+  /* Monta a árvore de Virtual DOM da aplicação */
   return (
     <Provider store={store}>
       <Router history={history}>

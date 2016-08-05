@@ -1,15 +1,13 @@
 {
   /* herda todas as rules pra react e jsx */
-  "extends": "airbnb",
+  "extends": ["standard", "standard-react", "airbnb"],
   /*
     Interessante informar os ambientes
     pra não dar erro em variáveis globais como a window
     do navegador
   */
   "env": {
-    "node": true,
     "browser": true,
-    "commonjs": true,
     "es6": true
   },
   "globals": {
@@ -25,14 +23,14 @@
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true,
       "jsx": true
-    },
-    "sourceType": "module"
+    }
   },
   /* Sobrescrevemos algumas rules do airbnb e do próprio eslint */
   rules: {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "import/no-unresolved": 1,
-    "import/no-extraneous-dependencies": 1,
-    "new-cap": ["error", { "newIsCapExceptions": ["localStorageDB"] }]
+    "import/no-unresolved": 0,
+    "import/no-extraneous-dependencies": 0,
+    "new-cap": ["error", { "newIsCapExceptions": ["localStorageDB"] }],
+    arrow-body-style: ["error", "as-needed"]
   }
 }

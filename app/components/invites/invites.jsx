@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { INVITES } from 'api/actions';
 import Invite from './invite.jsx';
 
 @connect((state) => ({
@@ -8,13 +9,14 @@ import Invite from './invite.jsx';
 class Invites extends React.Component {
 
   componentDidMount() {
-    this.props.dispatch({});
+    this.props.dispatch({ type: INVITES.REQUEST });
   }
 
   mapInvites = invite => <Invite key={`invite-${invite.id}`} invite={invite} />
 
   render() {
-    const list = this.props.invites.data.map(this.mapInvites);
+    debugger;
+    const list = this.props.invites.map(this.mapInvites);
 
     return (
       <div className="invites">

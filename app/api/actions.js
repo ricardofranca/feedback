@@ -13,3 +13,10 @@ const createRequestTypes = base => STATUS.reduce((types, type) => {
 
 export const FEEDBACKS = createRequestTypes('FEEDBACKS');
 export const INVITES = createRequestTypes('INVITES');
+
+export const action = (type, payload = {}) => ({ type, ...payload });
+
+export const actions = ({ SUCCESS, FAILURE }) => ({
+  success: (payload) => action(SUCCESS, { payload }),
+  failure: (error) => action(FAILURE, { error }),
+});

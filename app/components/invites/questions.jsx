@@ -1,20 +1,34 @@
 import React from 'react';
 import Question from './question.jsx';
 
-export default class Questions extends React.Component {
+class Questions extends React.Component {
+
+  createQuestion = ({ name = 'negative', iconClassName = 'meh' }) => <Question
+    invite={this.props.invite}
+    key={`question-${this.props.invite.id}-${name}`}
+    onChange={this.props.onChange}
+    iconClassName={`fa fa-${iconClassName}-o`}
+    name={name}
+  />
 
   render() {
-
     const questions = [
-      <Question invite={this.props.invite} key="question1" onChange={this.props.onChange} iconClassName="fa fa-meh-o" name="negative" />,
-      <Question invite={this.props.invite} key="question2" onChange={this.props.onChange} iconClassName="fa fa-smile-o" name="positive" />
-    ]
+      this.createQuestion(),
+      this.createQuestion({ name: 'positive', iconClassName: 'smile' }),
+    ];
 
-    return(
+    return (
       <div className="mdl-grid invite-grid">
         {questions}
       </div>
-    )
+    );
   }
 
 }
+
+Questions.propTypes = {
+  invite: React.PropTypes.object,
+  onChange: React.PropTypes.func,
+};
+
+export default Questions;

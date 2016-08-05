@@ -26,7 +26,7 @@ class Feedbacks extends React.Component {
 }
 
 Feedbacks.propTypes = {
-  dispatch: React.PropTypes.element,
+  dispatch: React.PropTypes.func,
   feedbacks: React.PropTypes.any,
 };
 
