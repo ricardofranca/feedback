@@ -22,6 +22,13 @@ app.get('/offline.appcache', function (req, res) {
 app.get('/*', function (req, res) {
     res.render('index', {user: req.user});
 });
-app.listen(process.env.PORT || 9090);
 
-console.log("Listen at", process.env.PORT || 9090);
+require(__dirname + '/config/https.js')(app);
+
+/* HTTPS */
+if ( !GLOBAL.Config.https ) {
+    app.listen(process.env.PORT || 9090);
+    console.log("Listen at", process.env.PORT || 9090);
+}
+
+

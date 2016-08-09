@@ -24,10 +24,11 @@ export default class DefaultLayout extends React.Component {
           <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
           <meta name="apple-mobile-web-app-title" content="Produto Reativo"/>
 
+          <meta name="application-name" content="Feedback from Produto Reativo" />
           <link rel="manifest" href="/assets/manifest.json"/>
           <link rel="icon" href="/assets/images/smile.ico"/>
 
-          <meta name="msapplication-TileColor" content="#3372DF"/>
+          <meta name="msapplication-TileColor" content="rgb(255, 235, 59)"/>
 
           <link rel="stylesheet"
                 href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en"/>

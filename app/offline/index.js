@@ -10,6 +10,12 @@ export default class OfflineWorker {
   }
 
   load = () => {
+
+    if ('serviceWorker' in navigator) {
+      //window.addEventListener("install", this.handleInstall);
+      this.handleInstall();
+    }
+
     const appCache = window.applicationCache;
     window.addEventListener('online', this.updateStatus.bind(this));
     window.addEventListener('offline', this.updateStatus.bind(this));
@@ -17,6 +23,20 @@ export default class OfflineWorker {
       appCache.addEventListener('updateready', this.updateVersion.bind(this));
       appCache.update();
     }
+  }
+
+  handleInstall = () => {
+    navigator.serviceWorker.register('/assets/js/sw.js', { scope: './' }).then(function(reg) {
+        if(reg.installing) {
+          console.log('Service worker installing');
+        } else if(reg.waiting) {
+          console.log('Service worker installed');
+        } else if(reg.active) {
+          console.log('Service worker active');
+        }
+      }).catch(function(error) {
+        console.log('Registration failed with ' + error);
+      });
   }
 
   updateVersion = () => {
