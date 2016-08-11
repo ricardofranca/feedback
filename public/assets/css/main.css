@@ -1,6 +1,60 @@
-.card-login-register {
+.brand-session {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 315px;
+  max-width: 560px;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 15px;
+}
+.user-session {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+:-webkit-autofill,
+:-webkit-autofill:hover,
+:-webkit-autofill:focus {
+  -webkit-text-fill-color: #000;
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+  -webkit-transition: background-color 5000s ease-in-out 0s;
+  transition: background-color 5000s ease-in-out 0s;
+}
+.user-session .mdl-textfield--floating-label.is-focused .mdl-textfield__label,
+.user-session .mdl-textfield--floating-label.is-dirty .mdl-textfield__label {
+  color: #ffc107;
+  font-weight: bold;
+  font-size: medium;
+}
+.card-login-register {
+  margin: 15px;
+}
+.card-login-register .mdl-card__actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+.card-login-register .mdl-card__actions .google-signin {
+  color: #db4437;
+  cursor: auto;
+}
+.card-login-register .mdl-card__actions .google-signin i {
+  font-size: 5em;
+}
+.card-login-register .mdl-card__actions .facebook-signin {
+  color: #3b5998;
+  cursor: auto;
+  cursor: none;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  opacity: 0.5;
+}
+.card-login-register .mdl-card__actions .facebook-signin i {
+  font-size: 5em;
 }
 .feedbacks {
   margin: 15px;
@@ -46,6 +100,7 @@ body {
   line-height: normal;
   line-height: initial;
   font-family: Roboto;
+  background-color: #ffeb3b;
 }
 #app__spinner {
   margin: auto;

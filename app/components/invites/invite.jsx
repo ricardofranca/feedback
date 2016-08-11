@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
-import { FEEDBACK_INVITES_INVITE_COMPLETED } from 'api/actions';
+import { FEEDBACK_INVITES_INVITE_COMPLETED, INVITES } from 'api/actions';
 import Questions from './questions.jsx';
 
 @connect((state) => ({
@@ -15,10 +15,11 @@ class Invite extends React.Component {
 
   update = (ev, value) => {
     const params = {
-      id: this.props.params.id,
+      id: this.props.invite.id,
     };
     const el = ev.currentTarget.name;
     params[el] = value;
+    this.props.dispatch({ type: INVITES.SAVE, payload: params });
   }
 
   formatStatus = (invite) => {

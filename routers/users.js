@@ -1,75 +1,90 @@
+const passport = require('passport');
+
 export default class Users {
 
-  login(req, res) {
-    var messages = "";
-    var flashs = req.flash();
-    if (flashs.error) {
-        messages = flashs.error.join(" ");
-    }
-    res.render('login', {title: "Feedback", messages: messages});
-  }
-
   logout(req, res) {
-      req.logout();
-      res.redirect('/');
+    req.logout();
+    res.redirect('/');
   }
 
-  register(req, res){
-      var messages = "";
-      var flashs = req.flash();
-      if (flashs.error) {
-          messages = flashs.error.join(" ");
-      }
-      res.render('register', {title: "Feedback", messages: messages})
+  redirectErrors(res) {
+    return (error) => res.render('index', { messages: error.errors });
   }
 
-  create(req, res){
-
+  create(req, res, next) {
     const User = this.models.User;
 
     User.findOne({
-        where: {
-            username: req.body.username
-        }
-    }).then(function(user){
+      where: {
+        username: req.body.username,
+        email: req.body.email,
+      },
+    }).then(user => {
+      if (!user) {
+        const newUser = User.build({
+          username: req.body.username,
+          email: req.body.email,
+        });
 
-        if( !user ) {
-
-            user = User.build({
-                username: req.body.username,
-                email: req.body.email
+        newUser.validate().then(error => {
+          if (error) {
+            this.redirectErrors(res)(error);
+          } else {
+            newUser.setPassword(req.body.password, () => {
+              newUser.save()
+                     .then(() => {
+                       req.login(newUser, err => {
+                         if (err) { return next(err); }
+                         return res.redirect('/');
+                       });
+                     })
+                     .catch(this.redirectErrors(res));
             });
-
-            user.setPassword(req.body.password, function(){
-                user.save().then(
-                    function() {
-                        res.redirect('/');
-                    }
-                );
-            });
-        }
-
-    });
-
+          }
+        });
+      } else {
+        this.redirectErrors(res)({
+          errors: [
+            {
+              message: 'username_already_registerd',
+              type: 'Validation error',
+              path: 'username',
+            },
+            {
+              message: 'email_already_registerd_with_email',
+              type: 'Validation error',
+              path: 'email',
+            },
+          ],
+        });
+      }
+    }).catch(this.redirectErrors(res));
   }
 
   constructor(app, models) {
     this.app = app;
     this.models = models;
-
-    app.get('/login', this.login.bind(this));
+    app.get('/logout', this.logout.bind(this));
     app.post('/login',
-        app.get("passport").authenticate('local',
-          {
-            successRedirect: '/',
-            failureRedirect: '/login',
-            failureFlash: true
-          })
+      app.get('passport').authenticate('local',
+        {
+          successRedirect: '/',
+          failureRedirect: '/',
+          failureFlash: true,
+        })
     );
-    app.get('/logout', this.logout.bind(this) );
-    app.get("/register", this.register.bind(this) );
-    app.post("/register", this.create.bind(this) );
+    app.post('/register', this.create.bind(this));
 
+    app.get('/auth/google',
+      passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+    app.get('/auth/google/callback',
+      passport.authenticate('google', {
+        successRedirect: '/',
+        failureRedirect: '/',
+        failureFlash: true,
+      })
+    );
   }
 
 }

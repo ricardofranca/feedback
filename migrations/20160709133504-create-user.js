@@ -8,7 +8,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      googleId: {
+        unique: true,
+        type: Sequelize.STRING
+      },
+      imageUrl: {
+        type: Sequelize.STRING
+      },
       username: {
+        allowNull: false,
+        unique: true,
         type: Sequelize.STRING
       },
       name: {
@@ -21,6 +30,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       email: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       activationKey: {

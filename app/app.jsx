@@ -60,8 +60,12 @@ function Root() {
     <Provider store={store}>
       <Router history={history}>
         <Route path="/" component={Base}>
-          <Route path="/feedbacks" component={Feedbacks} />
-          <Route path="/invites" component={Invites} />
+          <Route path="/feedbacks" component={Feedbacks}>
+            <Route path="/feedbacks/:id" component={Feedbacks} />
+          </Route>
+          <Route path="/invites" component={Invites}>
+            <Route path="/invites/:id" component={Invites} />
+          </Route>
         </Route>
         <Route path="/index.html" component={Base} />
       </Router>

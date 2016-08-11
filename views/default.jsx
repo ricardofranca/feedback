@@ -41,6 +41,7 @@ export default class DefaultLayout extends React.Component {
 
         <body>
           {this.props.children}
+          <script defer src="https://code.getmdl.io/1.1.3/material.min.js" />
         </body>
       </html>
     );

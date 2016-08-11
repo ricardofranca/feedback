@@ -9,7 +9,14 @@ import Feedback from './feedback.jsx';
 class Feedbacks extends React.Component {
 
   componentDidMount() {
-    this.props.dispatch({ type: FEEDBACKS.REQUEST });
+    let id = null;
+    if (this.props.params) {
+      id = this.props.params.id;
+    }
+    this.props.dispatch({
+      type: FEEDBACKS.REQUEST,
+      payload: { id },
+    });
   }
 
   mapFeedbacks = feedback => <Feedback key={`invite-${feedback.id}`} feedback={feedback} />
@@ -26,6 +33,7 @@ class Feedbacks extends React.Component {
 }
 
 Feedbacks.propTypes = {
+  params: React.PropTypes.any,
   dispatch: React.PropTypes.func,
   feedbacks: React.PropTypes.any,
 };

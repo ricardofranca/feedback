@@ -3,16 +3,6 @@ var https = require('https');
 
 module.exports = function( app ) {
 
-  GLOBAL.Config = {
-    https: process.env.HTTPS,
-    server: {
-      port: 9999,
-      privateKey: '/Users/cmilfont/host.nopass.key',
-      certificate: '/Users/cmilfont/server.crt',
-      ca: '/Users/cmilfont/milfont.ca-bundle'
-    }
-  };
-
   if( GLOBAL.Config.https ) {
 
     var privateKey = fs.readFileSync( Config.server.privateKey, 'utf8');

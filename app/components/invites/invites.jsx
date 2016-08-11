@@ -9,13 +9,19 @@ import Invite from './invite.jsx';
 class Invites extends React.Component {
 
   componentDidMount() {
-    this.props.dispatch({ type: INVITES.REQUEST });
+    let id = null;
+    if (this.props.params) {
+      id = this.props.params.id;
+    }
+    this.props.dispatch({
+      type: INVITES.REQUEST,
+      payload: { id },
+    });
   }
 
   mapInvites = invite => <Invite key={`invite-${invite.id}`} invite={invite} />
 
   render() {
-
     const list = this.props.invites.map(this.mapInvites);
 
     return (
@@ -28,6 +34,7 @@ class Invites extends React.Component {
 }
 
 Invites.propTypes = {
+  params: React.PropTypes.any,
   invites: React.PropTypes.any,
   dispatch: React.PropTypes.element,
 };

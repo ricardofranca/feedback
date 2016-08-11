@@ -51,7 +51,7 @@ export default class Feedbacks {
     this.app = app;
     this.models = models;
 
-    //app.get('/invites/:id.json', this.getInvite.bind(this));
+    app.get('/feedbacks/:id.json', this.getFeedback.bind(this));
     app.get('/feedbacks.json', this.getFeedbacks.bind(this));
   }
 

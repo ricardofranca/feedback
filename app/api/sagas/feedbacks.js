@@ -4,19 +4,20 @@ import { call, put } from 'redux-saga/effects';
 
 import { FEEDBACKS, actions } from 'api/actions';
 
-function fetchList() {
-  return fetch('/feedbacks.json')
+function fetchList(id) {
+  const url = (id) ? `/feedbacks/${id}.json` : '/feedbacks.json';
+  return fetch(url)
           .then(response => response.json())
           .then(json => json);
 }
 
-function* fetchFeedbacks() {
-  const action = actions(FEEDBACKS);
+function* fetchFeedbacks(action) {
+  const nextAction = actions(FEEDBACKS);
   try {
-    const list = yield call(fetchList);
-    yield put(action.success(list));
+    const list = yield call(fetchList, action.payload.id);
+    yield put(nextAction.success(list));
   } catch (e) {
-    yield put(action.failure({ message: e.message }));
+    yield put(nextAction.failure({ message: e.message }));
   }
 }
 
