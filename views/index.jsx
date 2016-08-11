@@ -12,6 +12,7 @@ export default class Index extends React.Component {
 
     return (
       <Default>
+        {user.email}
         {page}
       </Default>
     );
