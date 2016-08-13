@@ -54,7 +54,7 @@ export default class Feedbacks {
     });
     */
 
-    res.send(feedbacks);
+    res.send(this.feedbacks);
 
   }
 
