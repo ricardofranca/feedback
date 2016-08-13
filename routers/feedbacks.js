@@ -35,6 +35,7 @@ export default class Feedbacks {
   ];
 
   getFeedbacks(req, res) {
+    /*
     const { Feedback, User } = this.models;
 
     Feedback.findAll({
@@ -51,6 +52,9 @@ export default class Feedbacks {
     }).then(f => {
       res.send(f);
     });
+    */
+
+    res.send(feedbacks);
 
   }
 
@@ -63,6 +67,17 @@ export default class Feedbacks {
     res.send([feedback]);
   }
 
+  create(req, res) {
+    const { body } = req;
+    const feedback = {
+      start: body.start,
+      finish: body.finish,
+      description: body.description
+    };
+    feedbacks.push(feedback);
+    res.send(feedback);
+  }
+
   constructor(app, models) {
     this.app = app;
     this.models = models;
@@ -70,7 +85,7 @@ export default class Feedbacks {
     app.get('/feedbacks/:id.json', this.getFeedback.bind(this));
     app.get('/feedbacks.json', this.getFeedbacks.bind(this));
 
-    // app.post('feedbacks', this.create.bind(this));
+    app.post('feedbacks', this.create.bind(this));
   }
 
 }
