@@ -8,8 +8,7 @@ export default class Index extends React.Component {
   render() {
     const { user } = this.props;
     console.log("CADE O USER? ", user);
-    const page = (user) ?
-      <SinglePageApplication {...this.props} /> : <Landing {...this.props} />;
+    const page = <SinglePageApplication {...this.props} />;
 
     return (
       <Default>
