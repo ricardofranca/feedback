@@ -7,6 +7,8 @@ import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 
 import { Link } from 'react-router';
 
+import { FEEDBACKS } from 'api/actions';
+
 @connect((state) => ({
   bellNotify: state.bellNotify,
 }))
@@ -33,6 +35,10 @@ export default class Menu extends React.Component {
     return styles;
   }
 
+  handleOpen = () => {
+    this.dispatch(FEEDBACKS.NEW);
+  }
+
   render() {
     const styles = this.configureStyles();
 
@@ -48,6 +54,7 @@ export default class Menu extends React.Component {
         <ToolbarGroup />
         <ToolbarGroup>
           <IconButton
+            onTouchTap={this.handleOpen}
             style={styles.buttonStyle}
             iconStyle={styles.iconStyle}
             iconClassName="fa fa-smile-o"
