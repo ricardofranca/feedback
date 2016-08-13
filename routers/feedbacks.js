@@ -35,7 +35,23 @@ export default class Feedbacks {
   ];
 
   getFeedbacks(req, res) {
-    res.send(this.feedbacks);
+    const { Feedback, User } = this.models;
+
+    Feedback.findAll({
+        include: [
+            {
+                model: User
+            }
+        ],
+        where: [
+            {
+                UserId: 1
+            }
+        ]
+    }).then(f => {
+      res.send(f);
+    });
+
   }
 
   getFeedback(req, res) {
@@ -53,6 +69,8 @@ export default class Feedbacks {
 
     app.get('/feedbacks/:id.json', this.getFeedback.bind(this));
     app.get('/feedbacks.json', this.getFeedbacks.bind(this));
+
+    // app.post('feedbacks', this.create.bind(this));
   }
 
 }

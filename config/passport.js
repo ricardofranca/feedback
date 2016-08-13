@@ -4,6 +4,7 @@ const Strategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 export default (express, app, models) => {
+/*
   passport.use(new GoogleStrategy({
     clientID: GLOBAL.Config.clientID,
     clientSecret: GLOBAL.Config.clientSecret,
@@ -24,6 +25,7 @@ export default (express, app, models) => {
       },
     }).then(users => done(null, users[0]));
   }));
+*/
 
   passport.use(new Strategy(
     (username, password, done) => {

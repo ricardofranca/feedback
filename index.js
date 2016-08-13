@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import express from 'express';
-import * as models from './models';
+import models from './models';
 
 import globalsConfig from './config/globals';
 import httpsConfig from './config/https';
