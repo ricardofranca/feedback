@@ -22,7 +22,7 @@ function* fetchFeedbacks(action) {
   }
 }
 
-export default function* watchFeedbacks() {
+export function* watchFeedbacks() {
   yield* takeEvery(FEEDBACKS.REQUEST, fetchFeedbacks);
 }
 
@@ -44,15 +44,16 @@ function create(payload) {
 function* newFeedback(action) {
   const nextAction = actions(FEEDBACKS);
   try {
-    const invite = yield call(create, action.payload);
+    const feedback = yield call(create, action.payload);
     yield put(nextAction.success({
-      invite,
+      feedback,
       operation: 'create',
     }));
   } catch (e) {
     yield put(nextAction.failure({ message: e.message }));
   }
 }
-export function* saveFeedback() {
+
+export function* createFeedback() {
   yield* takeEvery(FEEDBACKS.CREATE, newFeedback);
 }

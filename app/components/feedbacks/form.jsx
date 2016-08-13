@@ -33,6 +33,7 @@ class Form extends React.Component {
     const type = actions.CREATE;
     const payload = this.state;
     dispatch({type, payload});
+    this.handleClose();
   }
 
   render() {
@@ -56,17 +57,20 @@ class Form extends React.Component {
           open={this.props.openNewFeedback}
         >
         <TextField
+          name="description"
           hintText="Description"
           multiLine={true}
           rows={2}
           rowsMax={4}
         />
         <DatePicker
+          name="start"
           onChange={this.changeValue}
           floatingLabelText="Start"
           autoOk={true}
         />
         <DatePicker
+          name="finish"
           floatingLabelText="Finish"
           autoOk={true}
         />

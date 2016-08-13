@@ -74,7 +74,7 @@ export default class Feedbacks {
       finish: body.finish,
       description: body.description
     };
-    feedbacks.push(feedback);
+    this.feedbacks.push(feedback);
     res.send(feedback);
   }
 
@@ -85,7 +85,7 @@ export default class Feedbacks {
     app.get('/feedbacks/:id.json', this.getFeedback.bind(this));
     app.get('/feedbacks.json', this.getFeedbacks.bind(this));
 
-    app.post('feedbacks', this.create.bind(this));
+    app.post('/feedbacks.json', this.create.bind(this));
   }
 
 }
