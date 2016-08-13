@@ -3,7 +3,7 @@ const crypto = require('crypto');
 const Strategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-module.exports = (express, app, path, models) => {
+export default (express, app, models) => {
   passport.use(new GoogleStrategy({
     clientID: GLOBAL.Config.clientID,
     clientSecret: GLOBAL.Config.clientSecret,

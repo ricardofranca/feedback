@@ -13,7 +13,6 @@ export default class Index extends React.Component {
 
     return (
       <Default>
-       Era pra ter coiso aqui
         {page}
       </Default>
     );

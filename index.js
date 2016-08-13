@@ -1,25 +1,33 @@
 import fs from 'fs';
+import path from 'path';
 import express from 'express';
 import * as models from './models';
+
+import globalsConfig from './config/globals';
+import httpsConfig from './config/https';
+import expressConfig from './config/express';
+import passportConfig from './config/passport';
+
 import Users from './routers/users';
 import Invites from './routers/invites';
 import Feedbacks from './routers/feedbacks';
 
-require(__dirname + '/config/globals.js')();
 const app = express();
-require('./config/express.js')(express, app, __dirname);
-require('./config/passport.js')(express, app, __dirname, models);
+
+expressConfig(express, app);
+passportConfig(express, app, models);
 
 new Users(app, models);
 new Invites(app, models);
 new Feedbacks(app, models);
 
-app.get('/offline.appcache', function (req, res) {
+const manifest = path.resolve(path.join('public', 'assets', 'offline.appcache'));
+app.get('/offline.appcache', (req, res) => {
   res.setHeader('Content-type', 'text/cache-manifest');
-  res.send(fs.readFileSync(__dirname + '/public/assets/offline.appcache'));
+  res.send(fs.readFileSync(manifest));
 });
 
-app.get('/*', function (req, res) {
+app.get('/*', (req, res) => {
   const user = req.user;
   const flashs = req.flash();
   const messages = (flashs.error) ? flashs.error.join(' ') : '';
@@ -31,9 +39,9 @@ app.get('/*', function (req, res) {
   });
 });
 
-require(__dirname + '/config/https.js')(app);
+httpsConfig(app);
 /* HTTPS */
-if (!GLOBAL.Config.https) {
+if (!globalsConfig.https) {
   app.listen(process.env.PORT || 9090);
   console.log('Listen at', process.env.PORT || 9090);
 }

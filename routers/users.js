@@ -1,3 +1,5 @@
+import Mailer from '../services/mailer';
+
 const passport = require('passport');
 
 export default class Users {
@@ -7,8 +9,8 @@ export default class Users {
     res.redirect('/');
   }
 
-  redirectErrors(res) {
-    return (error) => res.render('index', { messages: error.errors });
+  redirectErrors(res, page = 'index') {
+    return (error) => res.render(page, { messages: error.errors });
   }
 
   create(req, res, next) {
@@ -61,6 +63,45 @@ export default class Users {
     }).catch(this.redirectErrors(res));
   }
 
+  reset(req, res) {
+    const User = this.models.User;
+    User.findOne({
+      where: {
+        email: req.body.email,
+      },
+    }).then(user => {
+      if (!user) {
+        const error = {
+          errors: [],
+        };
+        this.redirectErrors(res, 'reset')(error);
+      } else {
+        user.generateHash(user => {
+          const mailer = new Mailer();
+          const url = `${GLOBAL.Config.url}/token/${user.hash}`;
+          const template = `<a href="${url}">CLique pra trocar a senha</a>`;
+          mailer.send({
+            from: 'feedback@produtoreativo.com.br',
+            to: user.email,
+            subject: 'Feedback from Produto Reativo: Reset Password',
+            content: 'Email de teste',
+          }).then((response) => {
+            console.log(response.statusCode);
+            console.log(response.body);
+            console.log(response.headers);
+          }).catch((error) => {
+            console.log('Error', error);
+          });
+          // redireciona pra tela email sended
+        });
+      }
+    }).catch(this.redirectErrors(res, 'reset'));
+  }
+
+  validateToken(req, res, next) {
+    next();
+  }
+
   constructor(app, models) {
     this.app = app;
     this.models = models;
@@ -74,6 +115,13 @@ export default class Users {
         })
     );
     app.post('/register', this.create.bind(this));
+
+    app.get('/reset/password', (req, res) => res.render('reset'));
+    app.post('/reset/password', this.reset.bind(this));
+
+    app.get('/token/:token',
+      this.validateToken.bind(this),
+      (req, res) => res.render('password'));
 
     app.get('/auth/google',
       passport.authenticate('google', { scope: ['profile', 'email'] }));

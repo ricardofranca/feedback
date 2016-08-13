@@ -22,6 +22,10 @@ export default class Login extends formCommons(React.Component) {
                 <button type="submit" className="mdl-button mdl-js-button mdl-button--raised">
                   Login
                 </button>
+                <a href="/reset/password" className="reset-password">
+                  <i className="fa fa-key" aria-hidden="true" />
+                  Reset
+                </a>
               </li>
             </ul>
           </form>

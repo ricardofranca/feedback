@@ -7,14 +7,6 @@
   margin: auto;
   margin-top: 15px;
 }
-.user-session {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
 :-webkit-autofill,
 :-webkit-autofill:hover,
 :-webkit-autofill:focus {
@@ -23,38 +15,54 @@
   -webkit-transition: background-color 5000s ease-in-out 0s;
   transition: background-color 5000s ease-in-out 0s;
 }
+.user-session {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
 .user-session .mdl-textfield--floating-label.is-focused .mdl-textfield__label,
 .user-session .mdl-textfield--floating-label.is-dirty .mdl-textfield__label {
   color: #ffc107;
   font-weight: bold;
   font-size: medium;
 }
-.card-login-register {
+.user-session .card-login-register {
   margin: 15px;
 }
-.card-login-register .mdl-card__actions {
+.user-session .card-login-register .mdl-card__actions {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: distribute;
       justify-content: space-around;
 }
-.card-login-register .mdl-card__actions .google-signin {
+.user-session .card-login-register .mdl-card__actions .google-signin {
   color: #db4437;
   cursor: auto;
 }
-.card-login-register .mdl-card__actions .google-signin i {
+.user-session .card-login-register .mdl-card__actions .google-signin i {
   font-size: 5em;
 }
-.card-login-register .mdl-card__actions .facebook-signin {
+.user-session .card-login-register .mdl-card__actions .facebook-signin {
   color: #3b5998;
   cursor: auto;
   cursor: none;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
   opacity: 0.5;
 }
-.card-login-register .mdl-card__actions .facebook-signin i {
+.user-session .card-login-register .mdl-card__actions .facebook-signin i {
   font-size: 5em;
+}
+.user-session .card-login-register .mdl-card__supporting-text form .login-list baseColor,
+.user-session .card-login-register .mdl-card__supporting-text form .login-list .mdl-list__item {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 .feedbacks {
   margin: 15px;

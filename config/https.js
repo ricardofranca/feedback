@@ -1,47 +1,43 @@
-var fs = require('fs');
-var https = require('https');
+import fs from 'fs';
+import https from 'https';
 
-module.exports = function( app ) {
+export default (app) => {
+  if (GLOBAL.Config.https) {
+    const privateKey = fs.readFileSync(Config.server.privateKey, 'utf8');
+    const certificate = fs.readFileSync(Config.server.certificate, 'utf8');
+    const ca = fs.readFileSync(Config.server.ca, 'utf8');
 
-  if( GLOBAL.Config.https ) {
-
-    var privateKey = fs.readFileSync( Config.server.privateKey, 'utf8');
-    var certificate = fs.readFileSync( Config.server.certificate, 'utf8');
-    var ca = fs.readFileSync( Config.server.ca, 'utf8');
-
-    var cas = [];
-    var file = [];
-    ca.split("\n").forEach(function(line, index){
-
+    const cas = [];
+    const file = [];
+    ca.split('\n').forEach(line => {
       file.push(line);
-
-      if( line.match("END CERTIFICATE") ) {
-        cas.push( file.join("\n") );
-        file = [];
+      if (line.match('END CERTIFICATE')) {
+        cas.push(file.join('\n'));
       }
-
     });
 
-    var credentials = {key: privateKey, cert: certificate, ca: cas};
+    const credentials = {
+      key: privateKey,
+      cert: certificate,
+      ca: cas,
+    };
 
     console.log('Will listen ', credentials);
+    const log = () =>
+      `Server configured for: ${global.process.env.NODE_ENV || 'development'} environment.`;
 
     try {
-      app.listen = function() {
-        var httpsServer = https.createServer(credentials, app);
+      app.listen = () => {
+        const httpsServer = https.createServer(credentials, app);
         return httpsServer.listen.apply(httpsServer, arguments);
       };
 
-      var server = app.listen(Config.server.port, function() {
-          console.log("Server configured for: " + (global.process.env.NODE_ENV || 'development') + " environment.");
-          console.log(new Date)
+      app.listen(Config.server.port, () => {
+        console.log(log());
+        console.log(new Date());
       });
-
     } catch (e) {
-      console.log("Error ", e);
+      console.log(`Error: ${e}`);
     }
-
-
   }
-
 };

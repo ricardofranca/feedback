@@ -15,26 +15,31 @@ sign-in(color)
     font-size: 5em;
 
 .user-session
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   .mdl-textfield--floating-label.is-focused .mdl-textfield__label,
   .mdl-textfield--floating-label.is-dirty .mdl-textfield__label
     color: #FFC107;
     font-weight: bold;
     font-size: medium;
 
-.card-login-register
-  margin: 15px;
+  .card-login-register
+    margin: 15px;
 
-  .mdl-card__actions
-    display: flex;
-    justify-content: space-around;
-    .google-signin
-      sign-in(#db4437)
-    .facebook-signin
-      sign-in(#3b5998)
-      cursor: none;
-      opacity: 0.5;
+    .mdl-card__actions
+      display: flex;
+      justify-content: space-around;
+      .google-signin
+        sign-in(#db4437)
+      .facebook-signin
+        sign-in(#3b5998)
+        cursor: none;
+        opacity: 0.5;
 
-  .mdl-card__supporting-text
-    form
-      .login-list
-        baseColor
+    .mdl-card__supporting-text
+      form
+        .login-list
+          baseColor
+          .mdl-list__item
+            justify-content: space-between;

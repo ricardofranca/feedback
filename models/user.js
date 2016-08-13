@@ -27,6 +27,13 @@ module.exports = (sequelize, DataTypes) => {
     verified: DataTypes.BOOLEAN,
   }, {
     instanceMethods: {
+      generateHash: function(callback) {
+        const updateHash = this.update.bind(this);
+        crypto.randomBytes(32, (error, buffer) => {
+          const hash = buffer.toString('hex');
+          updateHash({ hash }).then(callback);
+        });
+      },
       setPassword: function (password, callback) {
         const self = this;
         crypto.randomBytes(32, function (error, buf) {
