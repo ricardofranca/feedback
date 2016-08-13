@@ -25,6 +25,7 @@ export default class OfflineWorker {
   }
 
   handleInstall = () => {
+    /*
     navigator.serviceWorker.register('/assets/js/sw.js', { scope: './' }).then(reg => {
       if (reg.installing) {
         console.log('Service worker installing');
@@ -36,6 +37,7 @@ export default class OfflineWorker {
     }).catch(error => {
       console.log(`Registration failed with ${error}`);
     });
+    */
   }
 
   updateVersion = () => {

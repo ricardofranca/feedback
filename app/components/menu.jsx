@@ -36,7 +36,7 @@ export default class Menu extends React.Component {
   }
 
   handleOpen = () => {
-    this.dispatch(FEEDBACKS.NEW);
+    this.props.dispatch({ type: FEEDBACKS.NEW, payload: true });
   }
 
   render() {
