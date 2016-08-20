@@ -1,4 +1,7 @@
-import models from './models';
+class Exemplo {
+  state = { name: 'Milfont' }
+}
 
-console.log(models.Feedback);
+const exemplo = new Exemplo();
 
+exemplo.state.name

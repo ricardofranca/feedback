@@ -7,7 +7,7 @@ import React from 'react';
 /* API para permitir o React ter urls amigáveis
     com history API nativa do navegador
  */
-import { Router, Route, browserHistory } from 'react-router';
+import { IndexRedirect, Router, Route, browserHistory } from 'react-router';
 /* Biblioteca FLUX para geranciar os dados */
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 /* cola com react */
@@ -26,6 +26,8 @@ import api from 'api';
 import Base from 'components/base.jsx';
 import Invites from 'components/invites/invites.jsx';
 import Feedbacks from 'components/feedbacks/feedbacks.jsx';
+import FeedbacksForm from 'components/feedbacks/form.jsx';
+import Logout from 'components/logout.jsx';
 /* Nossa API que vai gerenciar quando a app estiver offline */
 import OfflineWorker from 'offline';
 /* Executamos no início para habilitar pro sistema inteiro */
@@ -60,6 +62,8 @@ function Root() {
     <Provider store={store}>
       <Router history={history}>
         <Route path="/" component={Base}>
+          <IndexRedirect to="/feedbacks" />
+          <Route path="/feedbacks/new" component={FeedbacksForm} />
           <Route path="/feedbacks" component={Feedbacks}>
             <Route path="/feedbacks/:id" component={Feedbacks} />
           </Route>
@@ -68,6 +72,7 @@ function Root() {
           </Route>
         </Route>
         <Route path="/index.html" component={Base} />
+        <Route path="/logout" component={Logout} />
       </Router>
     </Provider>
   );

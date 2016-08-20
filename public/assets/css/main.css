@@ -7,6 +7,11 @@
   margin: auto;
   margin-top: 15px;
 }
+@media only screen and (max-device-width: 768px) {
+  .brand-session {
+    margin-top: 0;
+  }
+}
 :-webkit-autofill,
 :-webkit-autofill:hover,
 :-webkit-autofill:focus {
@@ -76,8 +81,8 @@
   }
 }
 .feedback {
-  background: #f9f9f9;
-  padding: 15px;
+  background: #ffeb3b !important;
+  box-shadow: none !important;
 }
 .feedback .feedback-header {
   display: -webkit-box;

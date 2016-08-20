@@ -11,6 +11,7 @@ export default class Login extends formCommons(React.Component) {
             {this.createGlobalMessage()}
           </div>
           <form action="/login" method="post" autoComplete="off">
+            <input type="hidden" name="_csrf" value={this.props.csrfToken} />
             <ul className="login-list mdl-list">
               <li className="mdl-list__item">
                 {this.createFieldContainer('username', 'Username')}

@@ -18,6 +18,16 @@ export default (express, app) => {
   app.use(favicon(icoUrl));
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
-  app.use(expressSession({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+  app.use(expressSession({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
   app.use(connectFlash());
+
+  // app.use(app.get('csrfProtection'));
+  app.use((req, res, next) => {
+    //const token = req.csrfToken();
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    //res.cookie('csrf-token', token);
+    //res.locals.csrfToken = token;
+    next();
+  });
 };

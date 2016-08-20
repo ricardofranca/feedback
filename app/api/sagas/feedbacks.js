@@ -7,7 +7,14 @@ import { FEEDBACKS, actions } from 'api/actions';
 /* Saga pra buscar a listagem */
 function fetchList(id) {
   const url = (id) ? `/feedbacks/${id}.json` : '/feedbacks.json';
-  return fetch(url)
+  const config = {
+    credentials: 'include',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  };
+  return fetch(url, config)
           .then(response => response.json())
           .then(json => json);
 }
@@ -24,36 +31,4 @@ function* fetchFeedbacks(action) {
 
 export function* watchFeedbacks() {
   yield* takeEvery(FEEDBACKS.REQUEST, fetchFeedbacks);
-}
-
-/* Saga pra criar uma rodada de FEedback */
-function create(payload) {
-  const config = {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  };
-  return fetch('/feedbacks.json', config)
-          .then(response => response.json())
-          .then(json => json);
-}
-
-function* newFeedback(action) {
-  const nextAction = actions(FEEDBACKS);
-  try {
-    const feedback = yield call(create, action.payload);
-    yield put(nextAction.success({
-      feedback,
-      operation: 'create',
-    }));
-  } catch (e) {
-    yield put(nextAction.failure({ message: e.message }));
-  }
-}
-
-export function* createFeedback() {
-  yield* takeEvery(FEEDBACKS.CREATE, newFeedback);
 }

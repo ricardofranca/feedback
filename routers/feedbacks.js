@@ -34,48 +34,48 @@ export default class Feedbacks {
     }
   ];
 
-  getFeedbacks(req, res) {
-    /*
+  getFeedbacks(req, res, next) {
+    const user = req.user;
     const { Feedback, User } = this.models;
-
     Feedback.findAll({
-        include: [
-            {
-                model: User
-            }
-        ],
-        where: [
-            {
-                UserId: 1
-            }
-        ]
-    }).then(f => {
-      res.send(f);
+      include: {
+        model: User,
+        attributes: ['id', 'name', 'imageUrl'],
+      },
+      where: [{ UserId:  user.id}],
+    }).then(list => {
+      return res.send(
+        list.map(feedback => feedback.toJSON())
+      );
     });
-    */
-
-    res.send(this.feedbacks);
-
   }
 
   getFeedback(req, res) {
-    let feedback = this.feedbacks.reduce(function(a, b){
-      if(b.id == req.params.id) return b;
-      return a;
-    }, {});
-
-    res.send([feedback]);
+    const { params } = req;
+    const { Feedback, User } = this.models;
+    Feedback.findById(params.id, {
+      include: {
+        model: User,
+        attributes: ['id', 'name', 'imageUrl'],
+      },
+    }).then(feedback => res.send(feedback.toJSON()));
   }
 
   create(req, res) {
-    const { body } = req;
-    const feedback = {
-      start: body.start,
-      finish: body.finish,
-      description: body.description
-    };
-    this.feedbacks.push(feedback);
-    res.send(feedback);
+    const { user } = req;
+    this.models.Feedback.create({
+      UserId: user.id,
+      start: new Date(),
+      finish: new Date(),
+      description: `${user.name} o convida para uma rodada de Feedback`,
+    }).then(newFeedback => {
+      newFeedback.reload({
+        include: {
+          model: this.models.User,
+          attributes: ['id', 'name', 'imageUrl'],
+        },
+      }).then(feedback => res.send(feedback.toJSON()));
+    });
   }
 
   constructor(app, models) {
@@ -84,7 +84,6 @@ export default class Feedbacks {
 
     app.get('/feedbacks/:id.json', this.getFeedback.bind(this));
     app.get('/feedbacks.json', this.getFeedbacks.bind(this));
-
     app.post('/feedbacks.json', this.create.bind(this));
   }
 

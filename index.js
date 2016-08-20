@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import express from 'express';
+// import csurf from 'csurf';
 import models from './models';
 
 import globalsConfig from './config/globals';
@@ -12,7 +13,10 @@ import Users from './routers/users';
 import Invites from './routers/invites';
 import Feedbacks from './routers/feedbacks';
 
+// const csrfProtection = csurf({ cookie: true });
 const app = express();
+
+// app.set('csrfProtection', csrfProtection);
 
 expressConfig(express, app);
 passportConfig(express, app, models);
@@ -32,10 +36,16 @@ app.get('/*', (req, res) => {
   const flashs = req.flash();
   const messages = (flashs.error) ? flashs.error.join(' ') : '';
 
+  // if (user) {
+  //   req.logIn(user, { session: true}, () => {
+  //     console.log('Salvou o user na session', user.id);
+  //   });
+  // }
+
   res.render('index', {
     title: 'Feedback',
     user,
-    messages,
+    messages
   });
 });
 

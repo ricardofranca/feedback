@@ -6,12 +6,17 @@ import SinglePageApplication from './spa';
 export default class Index extends React.Component {
 
   render() {
-    const { user } = this.props;
-    console.log("CADE O USER? ", user);
-    const page = <SinglePageApplication {...this.props} />;
+    const { user, csrfToken } = this.props;
+
+    if (user) {
+      console.log("User.id", user.id);
+    }
+
+    const page = (user) ?
+      <SinglePageApplication {...this.props} /> : <Landing {...this.props} />;
 
     return (
-      <Default>
+      <Default csrfToken={csrfToken}>
         {page}
       </Default>
     );

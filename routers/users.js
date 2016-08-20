@@ -1,5 +1,4 @@
 import Mailer from '../services/mailer';
-
 const passport = require('passport');
 
 export default class Users {

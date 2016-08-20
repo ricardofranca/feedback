@@ -1,65 +1,24 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardText } from 'material-ui/Card';
-import moment from 'moment';
 
-import Avatar from 'material-ui/Avatar';
-import Chip from 'material-ui/Chip';
-import Badge from 'material-ui/Badge';
-import { blue500 } from 'material-ui/styles/colors';
+import FeedbackCard from 'components/feedbacks/feedbackcard.jsx';
+import Invited from 'components/feedbacks/invited.jsx';
 
-class Feedback extends Component {
-
-  mapInvited = invited => {
-    let disabled = (invited.feedbacks) ? '' : '-disabled';
-    const badgeStyle = {
-      top: 10,
-      right: 30,
-      backgroundColor: blue500,
-    };
-    if (!invited.feedbacks) {
-      badgeStyle.backgroundColor = '#9E9E9E';
-      disabled = '-disabled';
-    }
-
-    return (<Badge
-      key={`badge-${invited.id}`}
-      badgeContent={invited.feedbacks}
-      secondary={!!invited.feedbacks}
-      badgeStyle={badgeStyle}
-    >
-      <Chip
-        key={`chip-invited-${invited.id}`}
-        className={`invited-chip${disabled}`}
-      >
-        <Avatar src={invited.url} />
-        {invited.name}
-      </Chip>
-    </Badge>);
+export default class Feedback extends Component {
+  static propTypes = {
+    feedback: React.PropTypes.object,
   }
+
+  mapInvited = invited => <Invited key={`invited-${invited.id}`} invited={invited} />
 
   render() {
     const { feedback } = this.props;
-    const invitedList = feedback.invited.map(this.mapInvited);
-    const start = moment(feedback.start).format('MMMM Do YYYY');
-    const finish = moment(feedback.finish).format('MMMM Do YYYY');
-    const title = `${start} a ${finish}`;
+    const { invited } = feedback;
+    const invitedList = (invited) ? feedback.invited.map(this.mapInvited) : [];
 
     return (
-      <Card key={`feedback-${feedback.id}`} className="feedback">
-        <CardHeader
-          title={title}
-          avatar={feedback.user.url}
-        />
-        <CardText className="feedback-invited-list">
-          {invitedList}
-        </CardText>
-      </Card>
+      <FeedbackCard feedback={feedback}>
+        {invitedList}
+      </FeedbackCard>
     );
   }
 }
-
-Feedback.propTypes = {
-  feedback: React.PropTypes.object,
-};
-
-export default Feedback;
