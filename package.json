@@ -16,6 +16,27 @@
     "url": "https://github.com/cmilfont/feedback/issues"
   },
   "homepage": "http://prfeedback.herokuapp.com/",
+  "scripts": {
+    "postinstall": "parallelshell 'npm run deploy:js' 'sequelize db:migrate'",
+    "db:create": "node_modules/.bin/create_database",
+    "db:drop": "node_modules/.bin/drop_database",
+    "verify:js": "./node_modules/eslint/bin/eslint.js ./app --ext .jsx --ext .js",
+    "watch:css": "stylus -w -u ./node_modules/poststylus --with \"['postcss-opacity','postcss-cssnext']\" styles/main.styl -o public/assets/css/main.css",
+    "watch:js": "watchify app/app.jsx -m -d -v -o public/assets/js/bundle.js",
+    "deploy:js": "browserify app/app.jsx -o public/assets/js/bundle.js -t babelify -t [uglifyify --no-sourcemap --no-bundle-external]",
+    "build:js": "browserify app/app.jsx -o public/assets/js/bundle.min.js -t babelify -t [uglifyify --no-sourcemap --no-bundle-external]",
+    "watch:all": "parallelshell 'npm run watch:js' 'npm run watch:css' 'npm run offline' ",
+    "dev": "parallelshell 'npm start' 'npm run watch:all' ",
+    "start": "node -r babel-register index.js",
+    "start:dev": "nodemon -V -i 'app' -i 'public' -i 'styles' -i 'views' -r babel-register index.js",
+    "offline": "node -r babel-register update_version.js "
+  },
+  "browserify": {
+    "transform": [
+      "babelify",
+      "uglifyify"
+    ]
+  },
   "dependencies": {
     "babel": "^6.5.2",
     "babel-cli": "^6.6.5",
@@ -72,7 +93,7 @@
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-ga": "*",
-    "react-hammerjs": "*",
+    "react-hammerjs": "github:cmilfont/react-hammerjs",
     "react-markdown": "*",
     "react-redux": "^4.4.5",
     "react-router": "*",
@@ -83,32 +104,14 @@
     "redux-saga": "^0.11.0",
     "redux-thunk": "^2.1.0",
     "sendgrid": "^4.0.1",
-    "sequelize": "^3.19.3",
-    "sequelize-cli": "^2.3.1",
+    "sequelize": "^3.24.1",
+    "sequelize-cli": "^2.4.0",
+    "sequelize-migration-pg-extras": "github:cmilfont/sequelize-migration-pg-extras",
     "serve-favicon": "^2.3.0",
     "stylus": "^0.54.2",
     "uglifyify": "^3.0.1",
     "uglifyjs": "^2.4.10",
     "watchify": "^3.3.1",
     "webpack": "^2.1.0-beta"
-  },
-  "scripts": {
-    "postinstall": "parallelshell 'npm run deploy:js' 'sequelize db:migrate'",
-    "verify:js": "./node_modules/eslint/bin/eslint.js ./app --ext .jsx --ext .js",
-    "watch:css": "stylus -w -u ./node_modules/poststylus --with \"['postcss-opacity','postcss-cssnext']\" styles/main.styl -o public/assets/css/main.css",
-    "watch:js": "watchify app/app.jsx -m -d -v -o public/assets/js/bundle.js",
-    "deploy:js": "browserify app/app.jsx -o public/assets/js/bundle.js -t babelify -t [uglifyify --no-sourcemap --no-bundle-external]",
-    "build:js": "browserify app/app.jsx -o public/assets/js/bundle.min.js -t babelify -t [uglifyify --no-sourcemap --no-bundle-external]",
-    "watch:all": "parallelshell 'npm run watch:js' 'npm run watch:css' 'npm run offline' ",
-    "dev": "parallelshell 'npm start' 'npm run watch:all' ",
-    "start": "node -r babel-register index.js",
-    "start:dev": "nodemon -V -i 'app' -i 'public' -i 'styles' -i 'views' -r babel-register index.js",
-    "offline": "node -r babel-register update_version.js "
-  },
-  "browserify": {
-    "transform": [
-      "babelify",
-      "uglifyify"
-    ]
   }
 }

@@ -19,6 +19,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
+      startVerify: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      finishVerify: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
       UserId: {
         type: Sequelize.INTEGER,
         references: {

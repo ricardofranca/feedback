@@ -245,11 +245,17 @@ body {
   font-size: 40px;
   color: #2196f3;
 }
+.feedbacks-menu__popover {
+  background-color: #fff9c4 !important;
+}
 .feedbacks-menu__refresh {
   padding: 0;
 }
 .feedbacks-menu__refresh i {
   margin-top: 20px;
+}
+.feedbacks-menu .fa-bell {
+  color: #e65100 !important;
 }
 .profile {
   display: -webkit-box;

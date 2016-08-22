@@ -2,31 +2,47 @@
 import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import Hammer from 'react-hammerjs';
 import FeedbacksTheme from 'theme';
 import Menu from './menu.jsx';
 import Profile from './profile.jsx';
 
-function Base({ children }) {
-  let profile = <div />;
-  if (!children) {
-    profile = <Profile />;
+export default class Base extends React.Component {
+
+  static propTypes = {
+    children: React.PropTypes.element,
   }
 
-  return (
-    <MuiThemeProvider muiTheme={getMuiTheme(FeedbacksTheme)}>
-      <div>
-        <Menu />
-        <main className="">
-          {profile}
-          {children}
-        </main>
-      </div>
-    </MuiThemeProvider>
-  );
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired,
+  }
+
+  onSwipeRight = event => {
+    if (this.props.location.pathname === '/feedbacks') {
+      this.context.router.push('/invites');
+    }
+  }
+
+  onSwipeLeft = event => {
+    if (this.props.location.pathname === '/invites') {
+      this.context.router.push('/feedbacks');
+    }
+  }
+
+  render() {
+    const profile = (this.props.children) ? this.props.children : <Profile />;
+
+    return (
+      <MuiThemeProvider muiTheme={getMuiTheme(FeedbacksTheme)}>
+        <Hammer onSwipeLeft={this.onSwipeLeft} onSwipeRight={this.onSwipeRight}>
+          <div>
+            <Menu />
+            <main className="">
+              {profile}
+            </main>
+          </div>
+        </Hammer>
+      </MuiThemeProvider>
+    );
+  }
 }
-
-Base.propTypes = {
-  children: React.PropTypes.element,
-};
-
-export default Base;

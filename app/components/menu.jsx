@@ -5,7 +5,7 @@ import Popover from 'material-ui/Popover';
 import MenuUI from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
-import { yellow500 } from 'material-ui/styles/colors';
+import { yellow500, orange900, amber500, yellow100 } from 'material-ui/styles/colors';
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 
 import { Link } from 'react-router';
@@ -42,17 +42,22 @@ export default class Menu extends React.Component {
       buttonStyle: {
         padding: 0,
         top: '10px',
+        color: `${orange900}!important`,
       },
       iconStyle: {
         fontSize: '30px',
-        color: '#555',
+        color: orange900,
       },
       bellStyle: {
         position: 'absolute',
         left: '-30px',
+        color: `${orange900}!important`,
       },
       global: {
         backgroundColor: yellow500,
+      },
+      popover: {
+        'background-color': yellow100,
       },
     };
     return styles;
@@ -79,6 +84,8 @@ export default class Menu extends React.Component {
             iconClassName="fa fa-smile-o"
           >
             <Popover
+              className='feedbacks-menu__popover'
+              style={styles.popover}
               open={this.state.open}
               anchorEl={this.state.anchorEl}
               onTouchTap={this.handleRequestClose}
@@ -114,7 +121,7 @@ export default class Menu extends React.Component {
             <Link to={'/invites'}>
               <IconButton
                 style={styles.buttonStyle}
-                iconClassName="fa fa-bell-o"
+                iconClassName="fa fa-bell"
               />
             </Link>
           </div>
