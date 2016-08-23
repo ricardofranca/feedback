@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import fetch from 'isomorphic-fetch';
 import FlatButton from 'material-ui/FlatButton';
 import DatePicker from 'material-ui/DatePicker';
@@ -6,7 +7,11 @@ import TextField from 'material-ui/TextField';
 import CircularProgress from 'material-ui/CircularProgress';
 import { blue500 } from 'material-ui/styles/colors';
 import FeedbackCard from 'components/feedbacks/feedbackcard.jsx';
+import { FEEDBACKS, INVITES, actionCreate} from 'api/actions';
 
+@connect(state => ({
+  invite: state.invite,
+}))
 export default class Form extends React.Component {
 
   state = {
@@ -17,33 +22,14 @@ export default class Form extends React.Component {
   };
 
   componentDidMount() {
-    this.save();
+    const { dispatch } = this.props;
+    dispatch(actionCreate(FEEDBACKS));
   }
-
-  async save(method, body) {
-    try {
-      const response = await fetch('/feedbacks.json', this.createConfig(method, body));
-      const feedback = await response.json();
-      this.setState(feedback);
-    } catch (e) {
-      console.log('Booo', e);
-    }
-  }
-
-  createConfig = (method = 'POST', body = '') => ({
-    credentials: 'include',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    method,
-    body,
-  })
 
   handleCreate = () => {
     // const { dispatch } = this.props;
     // const type = FEEDBACKS.SAVE;
-    this.save('PUT', JSON.stringify(this.state));
+    // this.save('PUT', JSON.stringify(this.state));
     // dispatch({ type, payload });
   }
 
@@ -62,13 +48,6 @@ export default class Form extends React.Component {
   createFeedback = (feedback) => {
     if (this.state.id) {
       const bool = true;
-      const actions = [
-        <FlatButton
-          label="Submit"
-          primary={bool}
-          onTouchTap={this.handleCreate}
-        />,
-      ];
       return  <FeedbackCard feedback={feedback}>
                 <TextField
                   onChange={this.changeText}

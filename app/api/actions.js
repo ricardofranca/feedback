@@ -14,9 +14,19 @@ const createRequestTypes = base => STATUS.reduce((types, type) => {
 export const FEEDBACKS = createRequestTypes('FEEDBACKS');
 export const INVITES = createRequestTypes('INVITES');
 
+FEEDBACKS.URL = 'feedbacks';
+INVITES.URL = 'invites';
+
 export const action = (type, payload = {}) => ({ type, ...payload });
 
 export const actions = ({ SUCCESS, FAILURE }) => ({
   success: (payload) => action(SUCCESS, { payload }),
   failure: (error) => action(FAILURE, { error }),
 });
+
+export const actionCreate = (entity) => ({
+  entity,
+  type: entity.CREATE,
+  method: 'POST',
+  url: entity.URL,
+})

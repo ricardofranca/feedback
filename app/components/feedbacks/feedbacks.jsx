@@ -16,6 +16,8 @@ class Feedbacks extends React.Component {
     }
     this.props.dispatch({
       type: FEEDBACKS.REQUEST,
+      entity: FEEDBACKS,
+      url: 'feedbacks',
       payload: { id },
     });
   }

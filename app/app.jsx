@@ -51,8 +51,8 @@ function Root() {
   /* Applica o Middleware pra carregar os "observers" das sagas */
   sagaMiddleware.run(api.sagas);
   /* Nossa API offline vai ficar escutando e atualiza o cache no início da app */
-  const offline = new OfflineWorker(store);
-  store.subscribe(offline.register.bind(offline));
+  // const offline = new OfflineWorker(store);
+  // store.subscribe(offline.register.bind(offline));
   /* Linkamos o state do Store com o state do history, agora os componentes
     gerenciados pelos dois recebem os dados da route/url nos props
    */

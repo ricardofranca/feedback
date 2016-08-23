@@ -18,14 +18,14 @@ export default class Base extends React.Component {
   }
 
   onSwipeRight = event => {
-    if (this.props.location.pathname === '/feedbacks') {
-      this.context.router.push('/invites');
+    if (this.props.location.pathname === '/invites') {
+      this.context.router.push('/feedbacks');
     }
   }
 
   onSwipeLeft = event => {
-    if (this.props.location.pathname === '/invites') {
-      this.context.router.push('/feedbacks');
+    if (this.props.location.pathname === '/feedbacks') {
+      this.context.router.push('/invites');
     }
   }
 

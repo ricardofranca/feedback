@@ -21,6 +21,7 @@ function fetchList(id) {
 
 function* fetchFeedbacks(action) {
   const nextAction = actions(FEEDBACKS);
+  console.log("Saga", action);
   try {
     const list = yield call(fetchList, action.payload.id);
     yield put(nextAction.success(list));

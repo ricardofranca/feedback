@@ -1,80 +1,97 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import Popover from 'material-ui/Popover';
 import MenuUI from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
+import { List, ListItem } from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
-import { yellow500, orange900, amber500, yellow100 } from 'material-ui/styles/colors';
+import { yellow500, red500 } from 'material-ui/styles/colors';
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
-
 import { Link } from 'react-router';
 
 @connect((state) => ({
   bellNotify: state.bellNotify,
+  failure: state.failure,
 }))
 export default class Menu extends React.Component {
 
   static propTypes = {
     dispatch: React.PropTypes.func,
+    failure: React.PropTypes.object,
   }
 
   state = {
-    open: false,
+    openMenu: false,
+    openFailure: false,
   }
 
-  handleTouchTap = (event) => {
+  handleTouchTap = event => {
     event.preventDefault();
     this.setState({
-      open: true,
+      openMenu: true,
       anchorEl: event.currentTarget,
     });
   };
 
   handleRequestClose = () => {
     this.setState({
-      open: false,
+      openMenu: false,
+      openFailure: false,
     });
   };
 
-  configureStyles = () => {
+  handleException = event => {
+    event.preventDefault();
+    this.setState({
+      openFailure: true,
+      anchorEl: event.currentTarget,
+    });
+  }
+
+  closeException = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'CLOSE_FAILURE',
+      error: {}
+    });
+  }
+
+  configureStyles = (message) => {
+    const hasException = (message) ? 'visible': 'hidden';
     const styles = {
       buttonStyle: {
         padding: 0,
         top: '10px',
-        color: `${orange900}!important`,
       },
       iconStyle: {
-        fontSize: '30px',
-        color: orange900,
+        fontSize: '3.6rem',
       },
       bellStyle: {
         position: 'absolute',
         left: '-30px',
-        color: `${orange900}!important`,
       },
       global: {
         backgroundColor: yellow500,
       },
-      popover: {
-        'background-color': yellow100,
+      buttonExceptionStyle: {
+        padding: 0,
+        top: '10px',
+        visibility: hasException,
+      },
+      exception: {
+        fontSize: '2rem',
+        color: red500,
       },
     };
     return styles;
   }
 
   render() {
-    const styles = this.configureStyles();
-
+    const { message } = this.props.failure;
+    const styles = this.configureStyles(message);
     return (
       <Toolbar style={styles.global} className="feedbacks-menu">
-        <ToolbarGroup>
-          <IconButton
-            style={styles.buttonStyle}
-            iconStyle={styles.iconStyle}
-            iconClassName="fa fa-search"
-          />
-        </ToolbarGroup>
+        <ToolbarGroup />
         <ToolbarGroup />
         <ToolbarGroup>
           <IconButton
@@ -84,9 +101,7 @@ export default class Menu extends React.Component {
             iconClassName="fa fa-smile-o"
           >
             <Popover
-              className='feedbacks-menu__popover'
-              style={styles.popover}
-              open={this.state.open}
+              open={this.state.openMenu}
               anchorEl={this.state.anchorEl}
               onTouchTap={this.handleRequestClose}
               anchorOrigin={{ horizontal: 'middle', vertical: 'bottom' }}
@@ -112,8 +127,26 @@ export default class Menu extends React.Component {
           </IconButton>
         </ToolbarGroup>
         <ToolbarGroup>
-          <div className="mdl-layout--small-screen-only feedbacks-menu__refresh">
-            <i className="fa fa-circle-o-notch fa-spin fa-2x fa-fw" />
+          <div className="mdl-layout--small-screen-only feedbacks-menu__exception">
+            <IconButton
+              onTouchTap={this.handleException}
+              iconStyle={styles.exception}
+              style={styles.buttonExceptionStyle}
+              iconClassName="fa fa-exclamation-circle"
+            >
+              <Popover
+                open={this.state.openFailure}
+                anchorEl={this.state.anchorEl}
+                onTouchTap={this.handleRequestClose}
+                anchorOrigin={{ horizontal: 'middle', vertical: 'bottom' }}
+                targetOrigin={{ horizontal: 'middle', vertical: 'top' }}
+                onRequestClose={this.handleRequestClose}
+              >
+                <List>
+                  <ListItem onTouchTap={this.closeException} primaryText={message} />
+                </List>
+              </Popover>
+            </IconButton>
           </div>
         </ToolbarGroup>
         <ToolbarGroup>

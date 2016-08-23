@@ -1,3 +1,27 @@
+.dark-primary-color {
+  background: #fbc02d;
+}
+.default-primary-color {
+  background: #ffeb3b;
+}
+.light-primary-color {
+  background: #fff9c4;
+}
+.text-primary-color {
+  color: #212121;
+}
+.accent-color {
+  background: #448aff;
+}
+.primary-text-color {
+  color: #212121;
+}
+.secondary-text-color {
+  color: #757575;
+}
+.divider-color {
+  border-color: #bdbdbd;
+}
 .brand-session {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -245,17 +269,13 @@ body {
   font-size: 40px;
   color: #2196f3;
 }
-.feedbacks-menu__popover {
-  background-color: #fff9c4 !important;
-}
-.feedbacks-menu__refresh {
+.feedbacks-menu__exception {
   padding: 0;
 }
-.feedbacks-menu__refresh i {
+.feedbacks-menu__exception i {
   margin-top: 20px;
-}
-.feedbacks-menu .fa-bell {
-  color: #e65100 !important;
+  font-size: 2em;
+  color: #ff9800;
 }
 .profile {
   display: -webkit-box;

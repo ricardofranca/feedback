@@ -15,6 +15,8 @@ class Invites extends React.Component {
     }
     this.props.dispatch({
       type: INVITES.REQUEST,
+      entity: INVITES,
+      url: 'invites',
       payload: { id },
     });
   }
