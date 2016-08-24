@@ -12,11 +12,9 @@ import passportConfig from './config/passport';
 import Users from './routers/users';
 import Invites from './routers/invites';
 import Feedbacks from './routers/feedbacks';
+import Search from './routers/search';
 
-// const csrfProtection = csurf({ cookie: true });
 const app = express();
-
-// app.set('csrfProtection', csrfProtection);
 
 expressConfig(express, app);
 passportConfig(express, app, models);
@@ -24,6 +22,7 @@ passportConfig(express, app, models);
 new Users(app, models);
 new Invites(app, models);
 new Feedbacks(app, models);
+new Search(app, models);
 
 const manifest = path.resolve(path.join('public', 'assets', 'offline.appcache'));
 app.get('/offline.appcache', (req, res) => {

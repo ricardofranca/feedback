@@ -8,17 +8,32 @@ export default class SearchField extends React.Component {
     dataSource: [],
   }
 
+  async request(text) {
+    const config = {
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    };
+    try {
+      const response = await fetch(`/search?${text}`, config);
+      const dataSource = await response.json();
+      debugger;
+      this.setState({dataSource});
+    } catch (e) {
+      console.log('Booo', e);
+    }
+  }
+
   onSubmit = (event) => {
     event.preventDefault();
     console.log(event);
     return false;
   }
 
-  onUpdate = (value) => {
-    console.log(value);
-    const { dataSource } = this.state;
-    dataSource.push(value);
-    this.setState({ dataSource });
+  onUpdate = text => {
+    this.request(text);
   }
 
   render() {

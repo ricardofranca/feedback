@@ -28,6 +28,7 @@ import Invites from 'components/invites/invites.jsx';
 import Feedbacks from 'components/feedbacks/feedbacks.jsx';
 import FeedbacksForm from 'components/feedbacks/form.jsx';
 import Logout from 'components/logout.jsx';
+import Search from 'components/search/list.jsx';
 /* Nossa API que vai gerenciar quando a app estiver offline */
 import OfflineWorker from 'offline';
 /* Executamos no início para habilitar pro sistema inteiro */
@@ -63,6 +64,9 @@ function Root() {
       <Router history={history}>
         <Route path="/" component={Base}>
           <IndexRedirect to="/feedbacks" />
+          <Route path="/search" component={Search}>
+            <Route path="/search/:text" component={Search} />
+          </Route>
           <Route path="/feedbacks/new" component={FeedbacksForm} />
           <Route path="/feedbacks" component={Feedbacks}>
             <Route path="/feedbacks/:id" component={Feedbacks} />
