@@ -1,5 +1,7 @@
 config.vars.env
 
+public/assets/js/bundle.js
+
 .idea/workspace.xml
 .vscode/
 
