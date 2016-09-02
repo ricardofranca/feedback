@@ -11,3 +11,5 @@ export default class Search {
   }
 
 }
+
+module.exports = Search;

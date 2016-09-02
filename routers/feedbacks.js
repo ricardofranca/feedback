@@ -88,3 +88,5 @@ export default class Feedbacks {
   }
 
 }
+
+module.exports = Feedbacks;

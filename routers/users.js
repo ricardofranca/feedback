@@ -135,3 +135,5 @@ export default class Users {
   }
 
 }
+
+module.exports = Users;

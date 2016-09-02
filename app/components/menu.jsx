@@ -87,6 +87,13 @@ export default class Menu extends React.Component {
     return styles;
   }
 
+  openSettings = () => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'OPEN_SETTINGS',
+    });
+  }
+
   render() {
     const { message } = this.props.failure;
     const styles = this.configureStyles(message);
@@ -120,7 +127,10 @@ export default class Menu extends React.Component {
                   primaryText="New"
                   containerElement={<Link to="/feedbacks/new" />}
                 />
-                <MenuItem primaryText="Settings" />
+                <MenuItem
+                  primaryText="Settings"
+                  containerElement={<Link to="/settings" />}
+                />
                 <MenuItem
                   containerElement={<Link to="/logout" />}
                   primaryText="Logout"

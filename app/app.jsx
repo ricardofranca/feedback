@@ -14,6 +14,9 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 /* cola entre os tres */
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
+
+import { reducer } from 'redux-react-local';
+
 /* Middleware para gerenciar o redux de forma assincrona */
 import createSagaMiddleware from 'redux-saga';
 /* Biblioteca necessária para habilitar os events mobile da material-ui */
@@ -29,8 +32,9 @@ import Feedbacks from 'components/feedbacks/feedbacks.jsx';
 import FeedbacksForm from 'components/feedbacks/form.jsx';
 import Logout from 'components/logout.jsx';
 import Search from 'components/search/list.jsx';
+import Settings from 'components/settings/panel.jsx';
 /* Nossa API que vai gerenciar quando a app estiver offline */
-import OfflineWorker from 'offline';
+// import OfflineWorker from 'offline';
 /* Executamos no início para habilitar pro sistema inteiro */
 injectTapEventPlugin();
 
@@ -40,13 +44,14 @@ function Root() {
    */
   const sagaMiddleware = createSagaMiddleware();
   /* Comina os reducers de terceiros e os nossos */
-  const reducer = combineReducers({
+  const reducers = combineReducers({
     routing: routerReducer,
     ...api.reducers,
+    local: reducer,
   });
   /* Cria o Store que gerenciarar os dados compartilhados da APP inteira */
   const store = createStore(
-    reducer,
+    reducers,
     applyMiddleware(sagaMiddleware)
   );
   /* Applica o Middleware pra carregar os "observers" das sagas */
@@ -62,7 +67,7 @@ function Root() {
   return (
     <Provider store={store}>
       <Router history={history}>
-        <Route path="/" component={Base}>
+        <Route path="/" component={Base} sagaMiddleware={sagaMiddleware}>
           <IndexRedirect to="/feedbacks" />
           <Route path="/search" component={Search}>
             <Route path="/search/:text" component={Search} />
@@ -74,6 +79,7 @@ function Root() {
           <Route path="/invites" component={Invites}>
             <Route path="/invites/:id" component={Invites} />
           </Route>
+          <Route path="/settings" component={Settings} />
         </Route>
         <Route path="/index.html" component={Base} />
         <Route path="/logout" component={Logout} />

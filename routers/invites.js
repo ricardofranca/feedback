@@ -78,3 +78,5 @@ export default class Invites {
   }
 
 }
+
+module.exports = Invites;
