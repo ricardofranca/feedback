@@ -33,15 +33,11 @@ function executeFetch() {
   persist: false,
 })
 @saga(function*(state, props){
-  console.log('Props saga? ', props);
-  console.log('State saga? ', state);
-
   const payload = yield call(executeFetch);
   state.dispatch({
     type: 'SETTINGS_SUCCESS',
     payload,
   });
-
 })
 export default class Panel extends React.Component {
 

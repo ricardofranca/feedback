@@ -8,7 +8,7 @@ import IconButton from 'material-ui/IconButton';
 import { yellow500, red500 } from 'material-ui/styles/colors';
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 import { Link } from 'react-router';
-import SearchField from 'components/search/searchfield.jsx';
+// import SearchField from 'components/search/searchfield.jsx';
 
 @connect((state) => ({
   bellNotify: state.bellNotify,
@@ -99,9 +99,7 @@ export default class Menu extends React.Component {
     const styles = this.configureStyles(message);
     return (
       <Toolbar style={styles.global} className="feedbacks-menu">
-        <ToolbarGroup>
-          <SearchField />
-        </ToolbarGroup>
+        <ToolbarGroup />
         <ToolbarGroup />
         <ToolbarGroup>
           <IconButton
