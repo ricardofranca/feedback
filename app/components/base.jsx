@@ -14,13 +14,14 @@ export default class Base extends React.Component {
   static propTypes = {
     children: React.PropTypes.element,
     route: React.PropTypes.object,
+    location: React.PropTypes.object,
   }
 
   static contextTypes = {
     router: React.PropTypes.object.isRequired,
   }
 
-  onSwipeRight = event => {
+  onSwipeRight = () => {
     if (this.props.location.pathname === '/invites') {
       this.context.router.push('/feedbacks');
     } else if (this.props.location.pathname === '/feedbacks') {
@@ -28,7 +29,7 @@ export default class Base extends React.Component {
     }
   }
 
-  onSwipeLeft = event => {
+  onSwipeLeft = () => {
     if (this.props.location.pathname === '/feedbacks') {
       this.context.router.push('/invites');
     } else if (this.props.location.pathname === '/search') {
@@ -38,7 +39,6 @@ export default class Base extends React.Component {
 
   render() {
     const profile = (this.props.children) ? this.props.children : <Profile />;
-    console.log(this.props);
     return (
       <Sagas middleware={this.props.route.sagaMiddleware}>
         <MuiThemeProvider muiTheme={getMuiTheme(FeedbacksTheme)}>

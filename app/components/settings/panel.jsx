@@ -1,43 +1,19 @@
 import React from 'react';
 import { local } from 'redux-react-local';
-import { saga } from 'react-redux-saga';
-import { call, put } from 'redux-saga/effects';
-
-function executeFetch() {
-  const url = '/settings.json';
-  return fetch(url, {
-    method: 'GET',
-    credentials: 'include',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  }).then(response => response.json())
-    .then(json => json);
-}
+import { Card, CardHeader, CardText } from 'material-ui/Card';
+import Toggle from 'material-ui/Toggle';
+import api from 'components/settings/api';
 
 @local({
   ident: 'settings',
   initial: {
     email: '',
     imageUrl: '',
-    name: 'cmilfont',
+    name: '',
     id: null,
   },
-  reducer(state, action) {
-    if (action.type === 'SETTINGS_SUCCESS') {
-      return action.payload;
-    }
-    return state;
-  },
+  reducer: api.reducer,
   persist: false,
-})
-@saga(function*(state, props){
-  const payload = yield call(executeFetch);
-  state.dispatch({
-    type: 'SETTINGS_SUCCESS',
-    payload,
-  });
 })
 export default class Panel extends React.Component {
 
@@ -52,20 +28,43 @@ export default class Panel extends React.Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch({
-      type: 'OPEN_SETTINGS',
-    });
+    dispatch(api.request());
   }
+
+  save = (event, isInputChecked) => {
+    const { dispatch, state } = this.props;
+    const { id } = state;
+    const action = api.save({
+      payload: {
+        id,
+        notifications: isInputChecked,
+      },
+    });
+    dispatch(action);
+  }
+
   render() {
+    const style = {
+      margin: '10px',
+    };
     const { state } = this.props;
-    const { email, imageUrl, id, name } = state;
+    const { email, imageUrl, name, notifications } = state;
+    const save = this.save;
     return (
-      <div>
-        {email}
-        {name}
-        {id}
-        {imageUrl}
-      </div>
+      <Card style={style}>
+        <CardHeader
+          title={name}
+          subtitle={email}
+          avatar={imageUrl}
+        />
+        <CardText>
+          <Toggle
+            label="Notifications"
+            defaultToggled={notifications}
+            onToggle={save}
+          />
+        </CardText>
+      </Card>
     );
   }
 }

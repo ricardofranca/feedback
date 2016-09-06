@@ -97,7 +97,7 @@
     "react-hammerjs": "github:cmilfont/react-hammerjs",
     "react-markdown": "*",
     "react-redux": "^4.4.5",
-    "react-redux-saga": "^1.0.2",
+    "react-redux-saga": "github:cmilfont/react-redux-saga",
     "react-router": "*",
     "react-router-redux": "^4.0.5",
     "react-tap-event-plugin": "^1.0.0",

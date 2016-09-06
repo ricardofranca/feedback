@@ -9,7 +9,7 @@ import React from 'react';
  */
 import { IndexRedirect, Router, Route, browserHistory } from 'react-router';
 /* Biblioteca FLUX para geranciar os dados */
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 /* cola com react */
 import { Provider } from 'react-redux';
 /* cola entre os tres */
@@ -32,7 +32,7 @@ import Feedbacks from 'components/feedbacks/feedbacks.jsx';
 import FeedbacksForm from 'components/feedbacks/form.jsx';
 import Logout from 'components/logout.jsx';
 import Search from 'components/search/list.jsx';
-import Settings from 'components/settings/panel.jsx';
+import Settings from 'components/settings/container.jsx';
 /* Nossa API que vai gerenciar quando a app estiver offline */
 // import OfflineWorker from 'offline';
 /* Executamos no início para habilitar pro sistema inteiro */
@@ -52,10 +52,18 @@ function Root() {
   /* Cria o Store que gerenciarar os dados compartilhados da APP inteira */
   const store = createStore(
     reducers,
-    applyMiddleware(sagaMiddleware)
+    compose(
+      applyMiddleware(sagaMiddleware),
+      /* Pra se integrar com a extensão redux do Chrome */
+       window.devToolsExtension && window.devToolsExtension()
+    )
   );
   /* Applica o Middleware pra carregar os "observers" das sagas */
   sagaMiddleware.run(api.sagas);
+
+  /* Pra se integrar com a extensão redux do Chrome */
+  if (window.devToolsExtension) window.devToolsExtension.updateStore(store);
+
   /* Nossa API offline vai ficar escutando e atualiza o cache no início da app */
   // const offline = new OfflineWorker(store);
   // store.subscribe(offline.register.bind(offline));

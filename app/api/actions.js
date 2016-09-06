@@ -5,7 +5,7 @@ export const FEEDBACK_OFFLINE = `${NAMESPACE}_OFFLINE`;
 
 const STATUS = ['REQUEST', 'SUCCESS', 'FAILURE', 'SAVE', 'CREATE', 'DELETE', 'NEW'];
 
-const createRequestTypes = base => STATUS.reduce((types, type) => {
+export const createRequestTypes = base => STATUS.reduce((types, type) => {
   const object = Object.assign({}, types);
   object[type] = `${NAMESPACE}_${base}_${type}`;
   return object;
@@ -29,4 +29,19 @@ export const actionCreate = (entity) => ({
   type: entity.CREATE,
   method: 'POST',
   url: entity.URL,
-})
+});
+
+export const actionSave = (entity) => ({
+  entity,
+  type: entity.SAVE,
+  method: 'PUT',
+  url: entity.URL,
+});
+
+export const actionRequest = (entity) => ({
+  entity,
+  type: entity.REQUEST,
+  method: 'GET',
+  url: entity.URL,
+  payload: {},
+});

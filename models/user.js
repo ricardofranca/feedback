@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     activationKey: DataTypes.STRING,
     resetPasswordKey: DataTypes.STRING,
     verified: DataTypes.BOOLEAN,
+    notifications: DataTypes.BOOLEAN,
   }, {
     instanceMethods: {
       generateHash: function(callback) {
