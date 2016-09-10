@@ -60,7 +60,7 @@ export default class Panel extends React.Component {
         <CardText>
           <Toggle
             label="Notifications"
-            defaultToggled={notifications}
+            toggled={notifications}
             onToggle={save}
           />
         </CardText>

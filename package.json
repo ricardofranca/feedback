@@ -29,7 +29,8 @@
     "dev": "parallelshell 'npm start' 'npm run watch:all' ",
     "start": "node -r babel-register index.js",
     "start:dev": "nodemon -V -i 'app' -i 'public' -i 'styles' -i 'views' -r babel-register index.js",
-    "offline": "node -r babel-register update_version.js "
+    "offline": "node -r babel-register update_version.js ",
+    "test": "mocha test/.setup.js test/**/*Test.jsx"
   },
   "browserify": {
     "transform": [
@@ -116,5 +117,14 @@
     "uglifyjs": "^2.4.10",
     "watchify": "^3.3.1",
     "webpack": "^2.1.0-beta"
+  },
+  "devDependencies": {
+    "babel-plugin-rewire": "^1.0.0-rc-7",
+    "chai": "^3.5.0",
+    "enzyme": "^2.4.1",
+    "jsdom": "^9.5.0",
+    "mocha": "^3.0.2",
+    "react-addons-test-utils": "^15.3.1",
+    "sinon": "^1.17.5"
   }
 }
