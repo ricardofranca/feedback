@@ -1,43 +1,21 @@
 export default class Invites {
 
   invites = [
+
     {
       id: 18,
-      name: 'Christiano Martins Milfont de Almeida',
-      start: new Date,
-      finish: new Date,
+      description: 'Christiano Martins Milfont de Almeida o convida para dar um Feedback sobre o que voce admiria que ele pretende conservar e melhorar o que pode te incomodar',
       url: 'https://pbs.twimg.com/profile_images/85884918/barroso_200x200.JPG',
+      period: '16 de jul a 20 de jul',
       positive1: 'Acredito que tem um humor sempre contagiante',
       positive2: 'Uma pessoa que leva a vida na seriedade',
       positive3: 'Controla os gastos como ninguém',
       negative1: 'Precisa melhorar essa passagem de guarda',
       negative2: 'Faz os 100 kg do tecão',
       negative3: 'Meia guarda do Zuruca'
-    },
-  {
-    id: 23,
-    name: 'Chico',
-    start: new Date,
-    finish: new Date,
-    url: 'https://pbs.twimg.com/profile_images/85884918/barroso_200x200.JPG',
-    positive1: '',
-    positive2: '',
-    positive3: '',
-    negative1: '',
-    negative2: '',
-    negative3: ''
-  },{
-    id: 30,
-    start: new Date,
-    finish: new Date,
-    name: 'renoir',
-    positive1: '',
-    positive2: '',
-    positive3: '',
-    negative1: '',
-    negative2: '',
-    negative3: ''
-  }];
+    }
+
+    ];
 
   getInvites(req, res) {
     res.send(this.invites);

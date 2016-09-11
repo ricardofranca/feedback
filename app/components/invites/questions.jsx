@@ -1,14 +1,19 @@
 import React from 'react';
-import Question from './question.jsx';
+import Question from 'components/invites/question.jsx';
 
-class Questions extends React.Component {
+export default class Questions extends React.Component {
+
+  static propTypes = {
+    invite: React.PropTypes.object,
+    onChange:  React.PropTypes.func,
+  }
 
   createQuestion = ({ name, iconClassName }) => (<Question
     invite={this.props.invite}
     key={`question-${this.props.invite.id}-${name}`}
-    onChange={this.props.onChange}
     iconClassName={`fa fa-${iconClassName}-o`}
     name={name}
+    onChange={this.props.onChange}
   />)
 
   render() {
@@ -25,10 +30,3 @@ class Questions extends React.Component {
   }
 
 }
-
-Questions.propTypes = {
-  invite: React.PropTypes.object,
-  onChange: React.PropTypes.func,
-};
-
-export default Questions;

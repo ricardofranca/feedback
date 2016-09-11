@@ -1,7 +1,13 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 
-class Question extends React.Component {
+export default class Question extends React.Component {
+  static propTypes = {
+    name: React.PropTypes.string,
+    iconClassName: React.PropTypes.string,
+    invite: React.PropTypes.object,
+    onChange:  React.PropTypes.func,
+  }
 
   createField = index => {
     const name = `${this.props.name}${index}`;
@@ -32,13 +38,5 @@ class Question extends React.Component {
     );
   }
 
+
 }
-
-Question.propTypes = {
-  name: React.PropTypes.string,
-  iconClassName: React.PropTypes.string,
-  invite: React.PropTypes.object,
-  onChange: React.PropTypes.any,
-};
-
-export default Question;
