@@ -15,8 +15,6 @@ import { Provider } from 'react-redux';
 /* cola entre os tres */
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
-import { reducer } from 'redux-react-local';
-
 /* Middleware para gerenciar o redux de forma assincrona */
 import createSagaMiddleware from 'redux-saga';
 /* Biblioteca necessária para habilitar os events mobile da material-ui */
@@ -24,19 +22,37 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 /* ************************************************************************** */
 /* NOSSO CODIGO */
 /* Nossa API com actions, reducers e sagas */
-import api from 'api';
+//import api from 'api';
+
+const api = {
+  reducers: {
+    invites: (state = []) => state,
+  },
+};
+
 /* Componentes iniciais e das rotas */
-import Base from 'components/base.jsx';
-import Invites from 'components/invites/invites.jsx';
-import Feedbacks from 'components/feedbacks/feedbacks.jsx';
-import FeedbacksForm from 'components/feedbacks/form.jsx';
-import Logout from 'components/logout.jsx';
-import Search from 'components/search/list.jsx';
-import Settings from 'components/settings/container.jsx';
+//import Base from 'components/base.jsx';
+// import Invites from 'components/invites/invites.jsx';
+// import FeedbacksForm from 'components/feedbacks/form.jsx'
 /* Nossa API que vai gerenciar quando a app estiver offline */
 // import OfflineWorker from 'offline';
 /* Executamos no início para habilitar pro sistema inteiro */
 injectTapEventPlugin();
+
+const Invites = () => {
+  return <div>Invites</div>;
+}
+
+const FeedbacksForm = () => {
+  return <div>FeedbacksForm</div>;
+}
+
+const Base = (props) => {
+  return <div>
+    {props.children}
+  </div>
+}
+
 
 function Root() {
   /* Criamos o Middleware que será o responsável em ficar observando o dispatch
@@ -46,20 +62,19 @@ function Root() {
   /* Comina os reducers de terceiros e os nossos */
   const reducers = combineReducers({
     routing: routerReducer,
-    ...api.reducers,
-    local: reducer,
+    ...api.reducers
   });
   /* Cria o Store que gerenciarar os dados compartilhados da APP inteira */
   const store = createStore(
     reducers,
     compose(
-      applyMiddleware(sagaMiddleware),
+      //applyMiddleware(sagaMiddleware),
       /* Pra se integrar com a extensão redux do Chrome */
        window.devToolsExtension && window.devToolsExtension()
     )
   );
   /* Applica o Middleware pra carregar os "observers" das sagas */
-  sagaMiddleware.run(api.sagas);
+  //sagaMiddleware.run(api.sagas);
 
   /* Pra se integrar com a extensão redux do Chrome */
   if (window.devToolsExtension) window.devToolsExtension.updateStore(store);
@@ -75,25 +90,16 @@ function Root() {
   return (
     <Provider store={store}>
       <Router history={history}>
-        <Route path="/" component={Base} sagaMiddleware={sagaMiddleware}>
-          <IndexRedirect to="/feedbacks" />
-          <Route path="/search" component={Search}>
-            <Route path="/search/:text" component={Search} />
-          </Route>
+        <Route path="/" component={Base} >
+          <IndexRedirect to="/feedbacks/new" />
           <Route path="/feedbacks/new" component={FeedbacksForm} />
-          <Route path="/feedbacks" component={Feedbacks}>
-            <Route path="/feedbacks/:id" component={Feedbacks} />
-          </Route>
           <Route path="/invites" component={Invites}>
             <Route path="/invites/:id" component={Invites} />
           </Route>
-          <Route path="/settings" component={Settings} />
         </Route>
-        <Route path="/index.html" component={Base} />
-        <Route path="/logout" component={Logout} />
       </Router>
     </Provider>
   );
 }
 
-ReactDOM.render(<Root />, document.getElementById('app'));
+ReactDOM.render(<Root />, document.getElementById('root'));
