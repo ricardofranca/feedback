@@ -24,6 +24,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 /* NOSSO CODIGO */
 /* Nossa API com actions, reducers e sagas */
 //import api from 'api';
+import FeedbackReview from './components/FeedbackReview.jsx'
 
 const api = {
   reducers: {
@@ -83,17 +84,7 @@ function Root() {
   const history = syncHistoryWithStore(browserHistory, store);
   /* Monta a árvore de Virtual DOM da aplicação */
   return (
-    <Provider store={store}>
-      <Router history={history}>
-        <Route path="/" component={Base} >
-          <IndexRedirect to="/feedbacks/new" />
-          <Route path="/feedbacks/new" component={FeedbacksForm} />
-          <Route path="/invites" component={Invites}>
-            <Route path="/invites/:id" component={Invites} />
-          </Route>
-        </Route>
-      </Router>
-    </Provider>
+    <FeedbackReview></FeedbackReview>
   );
 }
 
