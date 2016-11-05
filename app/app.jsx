@@ -7,7 +7,10 @@ import React from 'react';
 /* API para permitir o React ter urls amigáveis
     com history API nativa do navegador
  */
- import Base from './base.jsx'
+ import Base from './base.jsx';
+
+ import FeedbackForm from './components/feedback/FeedbackForm.jsx';
+
 import { IndexRedirect, Router, Route, browserHistory } from 'react-router';
 /* Biblioteca FLUX para geranciar os dados */
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
@@ -20,16 +23,12 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 /* Biblioteca necessária para habilitar os events mobile da material-ui */
 import injectTapEventPlugin from 'react-tap-event-plugin';
+
+import ApiReducers from './api/reducers';
 /* ************************************************************************** */
 /* NOSSO CODIGO */
 /* Nossa API com actions, reducers e sagas */
 //import api from 'api';
-
-const api = {
-  reducers: {
-    invites: (state = []) => state,
-  },
-};
 
 /* Componentes iniciais e das rotas */
 //import Base from 'components/base.jsx';
@@ -44,11 +43,6 @@ const Invites = () => {
   return <div>Invites</div>;
 }
 
-const FeedbacksForm = () => {
-  return <div>FeedbacksForm</div>;
-}
-
-
 function Root() {
   /* Criamos o Middleware que será o responsável em ficar observando o dispatch
     das actions e gerenciando as requisições assíncronas principalmente
@@ -57,7 +51,7 @@ function Root() {
   /* Comina os reducers de terceiros e os nossos */
   const reducers = combineReducers({
     routing: routerReducer,
-    ...api.reducers
+    ...ApiReducers,
   });
   /* Cria o Store que gerenciarar os dados compartilhados da APP inteira */
   const store = createStore(
@@ -87,7 +81,7 @@ function Root() {
       <Router history={history}>
         <Route path="/" component={Base} >
           <IndexRedirect to="/feedbacks/new" />
-          <Route path="/feedbacks/new" component={FeedbacksForm} />
+          <Route path="/feedbacks/new" component={FeedbackForm} />
           <Route path="/invites" component={Invites}>
             <Route path="/invites/:id" component={Invites} />
           </Route>
