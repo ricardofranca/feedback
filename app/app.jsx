@@ -29,6 +29,7 @@ import ApiReducers from './api/reducers';
 /* NOSSO CODIGO */
 /* Nossa API com actions, reducers e sagas */
 //import api from 'api';
+import FeedbackReview from './components/FeedbackReview.jsx'
 
 /* Componentes iniciais e das rotas */
 //import Base from 'components/base.jsx';
