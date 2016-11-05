@@ -7,6 +7,7 @@ import React from 'react';
 /* API para permitir o React ter urls amigáveis
     com history API nativa do navegador
  */
+ import Base from './base.jsx'
 import { IndexRedirect, Router, Route, browserHistory } from 'react-router';
 /* Biblioteca FLUX para geranciar os dados */
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
@@ -45,12 +46,6 @@ const Invites = () => {
 
 const FeedbacksForm = () => {
   return <div>FeedbacksForm</div>;
-}
-
-const Base = (props) => {
-  return <div>
-    {props.children}
-  </div>
 }
 
 
