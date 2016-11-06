@@ -2,11 +2,21 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Inviteds from './Inviteds.jsx';
 
-
 class FeedbackForm extends React.Component {
 
+	componentDidMount() {
+		const { dispatch } = this.props;
+		dispatch({
+	    type: 'FEEDBACKS_CREATE',
+	  });
+	}
+
 	render() {
-    const { feedback: { owner : { photo, name }, description  }  } = this.props;
+    const { feedback: {
+			owner : { photo, name },
+			description,
+			inviteds,
+		  }  } = this.props;
 		return (
       <div className="demo-card-wide mdl-card mdl-shadow--2dp">
         <img src={photo} height='100px' width='100px' />
@@ -26,17 +36,17 @@ class FeedbackForm extends React.Component {
           <form action="#">
             <div className="mdl-textfield mdl-js-textfield">
               <textarea className="mdl-textfield__input" type="text" rows= "3" id="sample5" ></textarea>
-              <label className="mdl-textfield__label" for="sample5">{description}</label>
+              <label className="mdl-textfield__label" htmlFor="sample5">{description}</label>
             </div>
           </form>
 
        <form action="#">
           <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input className="mdl-textfield__input" type="text" id="search" />
-            <label className="mdl-textfield__label" for="search">Busque seus amigos</label>
+            <label className="mdl-textfield__label" htmlFor="search">Busque seus amigos</label>
           </div>
         </form>
-        <Inviteds />
+        <Inviteds inviteds={inviteds} />
       </div>
     );
 	}

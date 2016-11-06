@@ -17,28 +17,30 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 /* cola com react */
 import { Provider } from 'react-redux';
 /* cola entre os tres */
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
+import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 
 /* Middleware para gerenciar o redux de forma assincrona */
 import createSagaMiddleware from 'redux-saga';
-/* Biblioteca necessária para habilitar os events mobile da material-ui */
-import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import ApiReducers from './api/reducers';
+
+import Sagas from 'api/sagas';
 /* ************************************************************************** */
 /* NOSSO CODIGO */
 /* Nossa API com actions, reducers e sagas */
 //import api from 'api';
 import FeedbackReview from './components/FeedbackReview.jsx'
 
-/* Componentes iniciais e das rotas */
-//import Base from 'components/base.jsx';
-// import Invites from 'components/invites/invites.jsx';
-// import FeedbacksForm from 'components/feedbacks/form.jsx'
-/* Nossa API que vai gerenciar quando a app estiver offline */
-// import OfflineWorker from 'offline';
-/* Executamos no início para habilitar pro sistema inteiro */
-injectTapEventPlugin();
+import firebase from 'firebase';
+window.firebase = firebase;
+var config = {
+  apiKey: "AIzaSyAwFULDzJxhy67MYf5tMTMD3ygQh2pZGks",
+  authDomain: "biohacking-ca69d.firebaseapp.com",
+  databaseURL: "https://biohacking-ca69d.firebaseio.com",
+  storageBucket: "biohacking-ca69d.appspot.com",
+  messagingSenderId: "730944460815"
+};
+window.firebase.initializeApp(config);
 
 const Invites = () => {
   return <div>Invites</div>;
@@ -54,17 +56,20 @@ function Root() {
     routing: routerReducer,
     ...ApiReducers,
   });
+
+  const middlewares = [
+    routerMiddleware(browserHistory),
+    sagaMiddleware,
+  ];
   /* Cria o Store que gerenciarar os dados compartilhados da APP inteira */
   const store = createStore(
     reducers,
     compose(
-      //applyMiddleware(sagaMiddleware),
-      /* Pra se integrar com a extensão redux do Chrome */
-       window.devToolsExtension && window.devToolsExtension()
+      applyMiddleware(...middlewares)
     )
   );
   /* Applica o Middleware pra carregar os "observers" das sagas */
-  //sagaMiddleware.run(api.sagas);
+  sagaMiddleware.run(Sagas);
 
   /* Pra se integrar com a extensão redux do Chrome */
   if (window.devToolsExtension) window.devToolsExtension.updateStore(store);

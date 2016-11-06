@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import Invited from './Invited.jsx';
-import { connect } from 'react-redux';
 
 class Inviteds extends React.Component {
 
@@ -19,10 +18,4 @@ class Inviteds extends React.Component {
 	}
 }
 
-const mapPropsToState = (state) => {
-	return {
-    inviteds: state.feedback.inviteds,
-	}
-}
-
-export default connect(mapPropsToState)(Inviteds);
+export default Inviteds;
