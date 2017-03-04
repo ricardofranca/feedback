@@ -1,4 +1,8 @@
 import React, { Component, PropTypes } from 'react';
+
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { Provider } from 'react-redux';
+
 import firebase from 'firebase';
 import { Map } from 'immutable';
 import Base from 'components/Base';
@@ -13,97 +17,69 @@ const config = {
 firebase.initializeApp(config);
 window.firebase = firebase;
 
-class Provider extends Component {
-
-  state = {
-    user: Map({
-      displayName: 'Christiano Milfont',
-      email: '',
-      photoURL: '',
-      providerId:  '',
-      uid: '',
-      password: '',
-    }),
+const initialState = Map({
+  displayName: 'Christiano Milfont',
+  email: '',
+  photoURL: '',
+  providerId:  '',
+  uid: '',
+  password: '',
+});
+const userReducer = (state = initialState, { type, payload }) => {
+  if (type === 'onChange') {
+    const { name, value } = payload;
+    return state.merge({ [name]: value });
   }
+  return state;
+}
 
-  dispatch = (action) => {
-    if (action.type === 'onChange') {
-      const { name, value } = action.payload;
-      this.onChange(name, value);
+const errorsReducer = (state = [], { type, payload }) => {
+  if (type === 'onSubmitFailure') {
+    return [payload];
+  }
+  return state;
+}
+
+const feedbackMiddleware = (store) => {
+  return (dispatch) => {
+    return (action) => {
+
+      if (action.type === 'onSubmit') {
+        const { user } = store.getState();
+        const { email, password } = user.toJS();
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(email, password)
+          .then(payload => {
+            store.dispatch({ type: 'onSubmitSuccess', payload });
+          })
+          .catch(payload => {
+            console.log(payload);
+            store.dispatch({ type: 'onSubmitFailure', payload })
+          });
+      }
+
+      return dispatch(action);
     }
-    if (action.type === 'onSubmit') {
-      this.onSubmit();
-    }
-  }
-
-  static childContextTypes = {
-    store: PropTypes.object,
-    dispatch: PropTypes.func,
-  }
-
-  getChildContext() {
-    return {
-      dispatch: this.onChange,
-      store: this.state,
-    };
-  }
-
-  render() {
-    return this.props.children;
   }
 }
 
 class App extends Component {
 
-  // componentDidMount() {
-  //   firebase
-  //     .auth()
-  //     .signInWithEmailAndPassword('cmilfont@milfont.org', 'testes55')
-  //     .then(user => {
-  //       console.log('user', user);
-  //       this.setState( { user: this.state.user.merge(user) } );
-  //     })
-  //     .catch(function(error) {
-  //       const { code, message } = error;
-  //       console.log(code, message);
-  //   });
-  // }
-
-  onSubmit = () => {
-    const { email, password } = this.state.user.toJS();
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(user => {
-        this.setState({
-          user: this.state.user.merge(user)
-        })
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
-
-  onChange = (name, value) => {
-    const { user } = this.state;
-    this.setState({
-      user: user.merge({
-        [name]: value
-      })
-    })
-  }
-
   render() {
-
-    // const email = this.state.user.get('email');
-    const { user } = this.state;
+    const middlewares = [ feedbackMiddleware ];
+    const reducers = combineReducers({
+      user: userReducer,
+      errors: errorsReducer,
+      success: (state = [], action) => { return state }
+    });
+    const store = createStore(reducers, compose(applyMiddleware(...middlewares)));
 
     return (
-      <Provider>
+      <Provider store={store}>
         <div className="App">
-          <div>{user.get('email')}</div>
-          <Base onSubmit={this.onSubmit} onChange={this.onChange} user={user} />
-        </div>        
+          <Base />
+        </div>
       </Provider>
     );
   }

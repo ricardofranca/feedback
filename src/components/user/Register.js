@@ -1,30 +1,27 @@
 import React, { Component, PropTypes } from 'react';
-import { Map } from 'immutable';
+import { connect } from 'react-redux';
 
 class Register extends Component {
 
   onSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'onSubmit'
-    });
+    this.props.onSubmit();
   }
 
   onChange = ({ target: { name, value } }) => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'onChange',
-      payload: { name, value }
-    })
+    this.props.onChange({ name, value });
   }
 
   render() {
-    const { user } = this.props;
+    const { user, errors } = this.props;
+    const errorContainer = errors.map(({ code, message }) => (
+      <div key={`error-${code}`}>{code} - {message}</div>
+    ));
 
     return (
       <div>
+        <div className="errors">{errorContainer}</div>
         <form onSubmit={this.onSubmit}>
           <label htmlFor="email">Email</label>
           <input onChange={this.onChange} value={user.get('email')} className="" name="email" type="text" /> <br />
@@ -37,39 +34,10 @@ class Register extends Component {
   }
 }
 
-
-/* */
-class Wrapper extends Component {
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-    dispatch: PropTypes.func.isRequired,
-  }
-
-  render() {
-    const { store, dispatch } = this.context;
-    const { component, mapping } = this.props;
-    const defaultProps = mapping(store);
-    const props = {
-      ...defaultProps,
-      dispatch,
-    };
-    return React.createElement(component, props);
-  }
-
-}
-
-const connect = (mapping) => {
-  return (cmp) => {
-    return <Wrapper component={cmp}  />
-  }
-}
-/* */
-
-const mapStateToProps = function(state) {
-  return {
-    user: state.user,
-  }
-}
-
-export default connect(mapStateToProps)(Register);
+export default connect(
+  ({ user, errors }) => ({ user, errors }),
+  dispatch => ({
+    onSubmit: () => ( dispatch({type: 'onSubmit'}) ),
+    onChange: payload => ( dispatch({ type: 'onChange', payload }) )
+  })
+)(Register);
