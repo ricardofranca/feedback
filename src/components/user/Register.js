@@ -3,22 +3,21 @@ import { Map } from 'immutable';
 
 class Register extends Component {
 
-  static propTypes = {
-    user: PropTypes.object.isRequired,
-    onSubmit: PropTypes.func.isRequired,
-    onChange: PropTypes.func.isRequired,
-  }
-
   onSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    const { onSubmit } = this.props;
-    onSubmit();
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'onSubmit'
+    });
   }
 
   onChange = ({ target: { name, value } }) => {
-    const { onChange } = this.props;
-    onChange(name, value);
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'onChange',
+      payload: { name, value }
+    })
   }
 
   render() {
@@ -38,4 +37,39 @@ class Register extends Component {
   }
 }
 
-export default Register;
+
+/* */
+class Wrapper extends Component {
+
+  static contextTypes = {
+    store: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired,
+  }
+
+  render() {
+    const { store, dispatch } = this.context;
+    const { component, mapping } = this.props;
+    const defaultProps = mapping(store);
+    const props = {
+      ...defaultProps,
+      dispatch,
+    };
+    return React.createElement(component, props);
+  }
+
+}
+
+const connect = (mapping) => {
+  return (cmp) => {
+    return <Wrapper component={cmp}  />
+  }
+}
+/* */
+
+const mapStateToProps = function(state) {
+  return {
+    user: state.user,
+  }
+}
+
+export default connect(mapStateToProps)(Register);

@@ -1,8 +1,8 @@
 import React from 'react';
 import Register from 'components/user/Register';
 
-export default ({ onSubmit, onChange, user }) => {
+export default () => {
   return (
-    <Register onSubmit={onSubmit} onChange={onChange} user={user} />
+    <Register />
   );
 }

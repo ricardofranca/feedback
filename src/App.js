@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import firebase from 'firebase';
 import { Map } from 'immutable';
 import Base from 'components/Base';
@@ -13,7 +13,7 @@ const config = {
 firebase.initializeApp(config);
 window.firebase = firebase;
 
-class App extends Component {
+class Provider extends Component {
 
   state = {
     user: Map({
@@ -25,6 +25,35 @@ class App extends Component {
       password: '',
     }),
   }
+
+  dispatch = (action) => {
+    if (action.type === 'onChange') {
+      const { name, value } = action.payload;
+      this.onChange(name, value);
+    }
+    if (action.type === 'onSubmit') {
+      this.onSubmit();
+    }
+  }
+
+  static childContextTypes = {
+    store: PropTypes.object,
+    dispatch: PropTypes.func,
+  }
+
+  getChildContext() {
+    return {
+      dispatch: this.onChange,
+      store: this.state,
+    };
+  }
+
+  render() {
+    return this.props.children;
+  }
+}
+
+class App extends Component {
 
   // componentDidMount() {
   //   firebase
@@ -41,7 +70,18 @@ class App extends Component {
   // }
 
   onSubmit = () => {
-    console.log(this.state.user.toJS());
+    const { email, password } = this.state.user.toJS();
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(user => {
+        this.setState({
+          user: this.state.user.merge(user)
+        })
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
   onChange = (name, value) => {
@@ -59,10 +99,12 @@ class App extends Component {
     const { user } = this.state;
 
     return (
-      <div className="App">
-        <div>{user.get('email')}</div>
-        <Base onSubmit={this.onSubmit} onChange={this.onChange} user={user} />
-      </div>
+      <Provider>
+        <div className="App">
+          <div>{user.get('email')}</div>
+          <Base onSubmit={this.onSubmit} onChange={this.onChange} user={user} />
+        </div>        
+      </Provider>
     );
   }
 }
