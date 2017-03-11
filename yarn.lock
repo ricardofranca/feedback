@@ -4244,6 +4244,10 @@ rc@~1.1.6:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-data-grid@^2.0.18:
+  version "2.0.18"
+  resolved "https://registry.yarnpkg.com/react-data-grid/-/react-data-grid-2.0.18.tgz#b0ddd03f1c152cc2cc5aaa70bff500e64138f581"
+
 react-dev-utils@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-0.5.0.tgz#aedbf69cb1fbedb6f42350e4a988021f5cb4c493"

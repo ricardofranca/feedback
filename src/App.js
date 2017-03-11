@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 
 import firebase from 'firebase';
 import { Map } from 'immutable';
-import Base from 'components/Base';
+import Products from 'components/products';
 
 const config = {
   apiKey: "AIzaSyDGYMxpnYaAJYyquEUM6Y__yQjhPP_skx0",
@@ -78,7 +78,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div className="App">
-          <Base />
+          <Products />
         </div>
       </Provider>
     );
