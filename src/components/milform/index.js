@@ -5,9 +5,10 @@ import mapCrudDispatchToProps from 'api/actions'
 class Engine extends React.Component {
 
   onChange = ({ target: { name, value } }) => {
-    const { entity, onChange } = this.props;
+    const { entity, onChange, mode } = this.props;
     onChange({
       entity,
+      mode,
       form: {
         [name]: value,
       }
@@ -35,12 +36,24 @@ class Engine extends React.Component {
     this.props.onSubmit();
   }
 
+  componentDidMount() {
+    const { entity, entityId: id, request } = this.props;
+    if (id) {
+      request({ entity, id });
+    }
+  }
+
+
   render() {
-    const { entity, entities, onClear } = this.props;
+    const { entity, entities, onClear, mode } = this.props;
     const schema = entities[entity] || [];
-    const container = schema.filter.map(this.createFields);
+    const { errors } = schema;
+    const container = schema[mode].map(this.createFields);
     return (
       <div className="Form">
+        <div className="errors">
+          {errors}
+        </div>
         <form onSubmit={this.apply}>
           {container}
         </form>

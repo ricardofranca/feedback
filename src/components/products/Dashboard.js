@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import ReactDataGrid from 'react-data-grid';
 import Filter from 'components/milform';
 
@@ -8,6 +9,10 @@ class Dashboard extends React.Component {
   getRows = (index) => {
     const { products } = this.props;
     return products.rows[index];
+  }
+
+  onRowSelect = (rows) => {
+    this.props.dispatch(push(`/products/edit/34`));
   }
 
   render() {
@@ -32,9 +37,12 @@ class Dashboard extends React.Component {
 
     return (
       <div>
-        <Filter entity={entity} />
+        <Filter mode="filter" entity={entity} />
         <div className="Grid">
           <ReactDataGrid
+            enableCellSelect={true}
+            enableRowSelect="multi"
+            onRowSelect={this.onRowSelect}
             columns={columns}
             rowGetter={this.getRows}
             rowsCount={products.size}

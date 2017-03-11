@@ -2,9 +2,11 @@ const NAMESPACE = 'FEEDBACK';
 
 export const crud = {
   filter: `${NAMESPACE}-CRUD-FILTER`,
-  filterSuccess: `${NAMESPACE}-CRUD-FILTER_SUCCESS`,
+  filterSuccess: `${NAMESPACE}-CRUD-FILTER-SUCCESS`,
   onChange: `${NAMESPACE}-CRUD-FILTER-CHANGE`,
-  onClear: '`${NAMESPACE}-CRUD-FILTER-CLEAR`'
+  onClear: `${NAMESPACE}-CRUD-FILTER-CLEAR`,
+  find: `${NAMESPACE}-CRUD-FIND`,
+  findSuccess: `${NAMESPACE}-CRUD-FIND-SUCCESS`,
 }
 
 export default dispatch => (
@@ -17,6 +19,9 @@ export default dispatch => (
     ),
     onSubmit: () => (
       dispatch({ type: crud.filter })
+    ),
+    request: payload => (
+      dispatch({ type: crud.find, payload })
     ),
   }
 )
