@@ -29,8 +29,14 @@ class Engine extends React.Component {
     );
   }
 
+  apply = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    this.props.onSubmit();
+  }
+
   render() {
-    const { entity, entities } = this.props;
+    const { entity, entities, onClear } = this.props;
     const schema = entities[entity] || [];
     const container = schema.filter.map(this.createFields);
     return (
@@ -38,6 +44,10 @@ class Engine extends React.Component {
         <form onSubmit={this.apply}>
           {container}
         </form>
+        <div className="Filter__Toolbar">
+          <button onClick={this.apply}>Aplicar</button>
+          <button onClick={onClear}>Limpar</button>
+        </div>
       </div>
     );
   }

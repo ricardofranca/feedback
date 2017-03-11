@@ -19,6 +19,10 @@ const initialState = {
 
 export default (state = initialState, action) => {
 
+  if (action.type === crud.onClear) {
+    return initialState;
+  }
+
   if (action.type === crud.onChange) {
     const { entity, form } = action.payload;
     const filter = state[entity].filter;

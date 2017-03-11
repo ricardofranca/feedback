@@ -1,8 +1,12 @@
 import React from 'react';
-import Register from 'components/user/Register';
 
-export default () => {
+export default ({ children }) => {
   return (
-    <Register />
+    <div className="mdc-main">
+
+      <div> MENU </div>
+
+      {children}
+    </div>
   );
 }

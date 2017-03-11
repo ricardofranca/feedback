@@ -1,12 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
+import { browserHistory, IndexRedirect, Router, Route } from 'react-router';
+import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import firebase from 'firebase';
 import { Map } from 'immutable';
 
 import apiReducers from 'api/reducers';
 import feedbackMiddleware from 'api/middlewares';
 
+import Base from 'components/Base';
 import Products from 'components/products';
 
 const config = {
@@ -22,15 +25,29 @@ window.firebase = firebase;
 class App extends Component {
 
   render() {
-    const middlewares = [ feedbackMiddleware ];
-    const reducers = combineReducers({ ...apiReducers });
+    const middlewares = [
+      routerMiddleware(browserHistory),
+      feedbackMiddleware
+    ];
+    const reducers = combineReducers({
+      routing: routerReducer,
+      ...apiReducers
+    });
     const store = createStore(reducers, compose(applyMiddleware(...middlewares)));
+
+    const history = syncHistoryWithStore(browserHistory, store);
 
     return (
       <Provider store={store}>
-        <div className="App">
-          <Products entity="products" />
-        </div>
+        <Router history={history}>
+
+          <Route path="/" component={Base}>
+            <IndexRedirect to="/products" />
+            <Route path="/products" component={Products} />
+            <Route path="/products/*" component={Products} />
+          </Route>
+
+        </Router>
       </Provider>
     );
   }
