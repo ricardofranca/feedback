@@ -1,14 +1,16 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import ReactDataGrid from 'react-data-grid';
+import Filter from 'components/products/filter';
 
 class Products extends React.Component {
 
-  static propTypes = {
-    products: PropTypes.shape({
-      rows: PropTypes.array.isRequired,
-      size: PropTypes.int,
-    }),
-  }
+  // static propTypes = {
+  //   products: PropTypes.shape({
+  //     rows: PropTypes.array.isRequired,
+  //     size: PropTypes.int.isRequired,
+  //   }),
+  // }
 
   getRows = (index) => {
     const { products } = this.props;
@@ -32,10 +34,7 @@ class Products extends React.Component {
 
     return (
       <div className="Product">
-        <div className="Filter">
-          <div className="Form">Form</div>
-          <div className="Filter__Toolbar">Filter__Toolbar</div>
-        </div>
+        <Filter />
         <div className="Grid">
           <ReactDataGrid
             columns={columns}
@@ -50,4 +49,6 @@ class Products extends React.Component {
   }
 }
 
-export default Products;
+export default connect(
+  ({ products }) => ({ products })
+)(Products);
