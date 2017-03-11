@@ -1,8 +1,4 @@
 const initialState = {
-  filter: {
-    description: '',
-    price: '',
-  },
   rows: [],
   size: 0,
 };
@@ -20,16 +16,6 @@ console.log('reducer', action.type, action.payload);
       ...action.payload,
     };
   }
-
-  if (action.type === 'onChange') {
-    return {
-      ...products,
-      filter: {
-        ...products.filter,
-        ...action.payload,
-      }
-    };
-  }
-
+  
   return products;
 }

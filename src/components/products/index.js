@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import ReactDataGrid from 'react-data-grid';
-import Filter from 'components/products/filter';
+
+import Filter from 'components/milform';
 
 class Products extends React.Component {
 
@@ -18,7 +19,7 @@ class Products extends React.Component {
   }
 
   render() {
-    const { products } = this.props;
+    const { products, entity } = this.props;
     const columns = [
       {
         key: 'description',
@@ -34,7 +35,7 @@ class Products extends React.Component {
 
     return (
       <div className="Product">
-        <Filter />
+        <Filter entity={entity} />
         <div className="Grid">
           <ReactDataGrid
             columns={columns}
