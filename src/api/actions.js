@@ -3,6 +3,7 @@ const NAMESPACE = 'FEEDBACK';
 export const user = {
   login: `${NAMESPACE}_USER_LOGIN`,
   loginFailure: `${NAMESPACE}_USER_LOGIN_ERROR`,
+  navigation: `${NAMESPACE}_USER_NAVIGATION`,
   logged: `${NAMESPACE}_USER_LOGGED`,
   loaded: `${NAMESPACE}_USER_LOADED`,
   logout: `${NAMESPACE}_USER_LOGOUT`,

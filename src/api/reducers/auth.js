@@ -6,6 +6,7 @@ const initialState = fromJS({
   user: {
     email: '',
   },
+  navigation: '/',
   emailSignIn: {
     loading: {},
     default: {
@@ -22,9 +23,17 @@ const initialState = fromJS({
 });
 
 export default (state = initialState, action) => {
+
+  console.log('[AUTH]', action.type, action.payload);
+
   if (action.type === actions.user.loaded) {
     return initialState;
   }
+
+  if (action.type === actions.user.navigation) {
+    return state.mergeDeepIn(['navigation'], action.payload);
+  }
+
   if (action.type === actions.user.updateForm) {
     return state.mergeDeepIn(['emailSignIn', 'default', 'form'], action.payload);
   }

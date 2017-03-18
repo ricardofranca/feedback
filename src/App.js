@@ -7,6 +7,7 @@ import createSagaMiddleware from 'redux-saga';
 import firebase from 'firebase';
 import { Map } from 'immutable';
 
+import actions from 'api/actions';
 import apiReducers from 'api/reducers';
 import sagas from 'api/sagas';
 import FeedbackRouter from 'Router';
@@ -23,8 +24,8 @@ window.firebase = firebase;
 
 class App extends Component {
 
-  render() {
-
+  constructor(props) {
+    super(props);
     const sagaMiddleware = createSagaMiddleware({
       onError: (error) => {
         //window.airbrake.notify(error);
@@ -39,24 +40,33 @@ class App extends Component {
       routing: routerReducer,
       ...apiReducers
     });
-    const store = createStore(reducers, compose(applyMiddleware(...middlewares)));
-    const history = syncHistoryWithStore(browserHistory, store);
+    this.store = createStore(reducers, compose(applyMiddleware(...middlewares)));
+    this.history = syncHistoryWithStore(browserHistory, this.store);
 
     sagaMiddleware.run(sagas);
+  }
+
+  componentDidMount() {
+    window.firebase.auth().onAuthStateChanged(payload => {
+      this.store.dispatch({ type: actions.user.logged, payload });
+    });
+  }
+
+  render() {
 
     const validate = (nextState, replace, callback) => {
-      const { auth } = store.getState();
+      const { auth } = this.store.getState();
       const email = auth.getIn(['user', 'email']);
       const { location: { pathname: payload } } = nextState;
-      if (payload  === '/profile' && !email) {
-        replace('/login');
+      if (!email) {
+        this.store.dispatch({ payload, type: actions.user.navigation });
       }
       callback();
     }
 
     return (
-      <Provider store={store}>
-        <FeedbackRouter history={history} validate={validate} />
+      <Provider store={this.store}>
+        <FeedbackRouter history={this.history} validate={validate} />
       </Provider>
     );
   }
