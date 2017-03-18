@@ -41,7 +41,7 @@ class Dashboard extends React.Component {
         <div className="Grid">
           <ReactDataGrid
             enableCellSelect={true}
-            enableRowSelect="multi"
+            enableRowSelect={true}
             onRowSelect={this.onRowSelect}
             columns={columns}
             rowGetter={this.getRows}

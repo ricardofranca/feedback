@@ -8,9 +8,7 @@ import { Map } from 'immutable';
 
 import apiReducers from 'api/reducers';
 import feedbackMiddleware from 'api/middlewares';
-
-import Base from 'components/Base';
-import Products from 'components/products';
+import FeedbackRouter from 'Router';
 
 const config = {
   apiKey: "AIzaSyDGYMxpnYaAJYyquEUM6Y__yQjhPP_skx0",
@@ -34,20 +32,20 @@ class App extends Component {
       ...apiReducers
     });
     const store = createStore(reducers, compose(applyMiddleware(...middlewares)));
-
     const history = syncHistoryWithStore(browserHistory, store);
+
+    const validate = (nextState, replace, callback) => {
+      const state = store.getState();
+      const { location: { pathname: payload } } = nextState;
+      if (payload  === '/profile') {
+        replace('/login');
+      }
+      callback();
+    }
 
     return (
       <Provider store={store}>
-        <Router history={history}>
-
-          <Route path="/" component={Base}>
-            <IndexRedirect to="/products" />
-            <Route path="/products" component={Products} />
-            <Route path="/products/*" component={Products} />
-          </Route>
-
-        </Router>
+        <FeedbackRouter history={history} validate={validate} />
       </Provider>
     );
   }
