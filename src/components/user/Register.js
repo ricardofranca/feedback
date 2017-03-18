@@ -1,20 +1,25 @@
-  import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { authDispatchers } from 'api/actions';
 
 class Register extends Component {
 
   onSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    this.props.onSubmit();
+    this.props.register();
   }
 
   onChange = ({ target: { name, value } }) => {
-    this.props.onChange({ name, value });
+    this.props.onChange({
+      [name]: value,
+    });
   }
 
   render() {
-    const { user, errors } = this.props;
+    const { auth } = this.props;
+    const errors = auth.getIn(['emailSignIn', 'default', 'errors']);
+    const user = auth.getIn(['emailSignIn', 'default', 'form']);
     const errorContainer = errors.map(({ code, message }) => (
       <div key={`error-${code}`}>{code} - {message}</div>
     ));
@@ -34,10 +39,4 @@ class Register extends Component {
   }
 }
 
-export default connect(
-  ({ user, errors }) => ({ user, errors }),
-  dispatch => ({
-    onSubmit: () => ( dispatch({type: 'onSubmit'}) ),
-    onChange: payload => ( dispatch({ type: 'onChange', payload }) )
-  })
-)(Register);
+export default connect(({ auth }) => ({ auth }), authDispatchers)(Register);

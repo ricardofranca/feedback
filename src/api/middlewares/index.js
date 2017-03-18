@@ -1,43 +1,24 @@
-import { crud } from 'api/actions';
-
-const row = {
-  id: 12993,
-  description: 'Camisa do Corinthians - com sangue do dono',
-  price: 10
-};
+import actions from 'api/actions';
+import { push } from 'react-router-redux';
 
 export default (store) => {
   return (dispatch) => {
     return (action) => {
 
-      if (action.type === crud.find) {
-        const { entity } = action.payload;
-        store.dispatch({
-          type: crud.findSuccess,
-          payload: {
-            entity,
-            data: row,
-          },
-        });
-      }
-
-      if (action.type === crud.filter) {
-        const { entities } = store.getState();
-        console.log('mid', action.type, action.payload, entities);
-        store.dispatch({
-          type: crud.filterSuccess,
-          payload: {
-            size: 2,
-            rows: [
-              {
-                id: 12999,
-                description: 'Camisa do Vasco',
-                price: 350
-              },
-              row,
-            ],
-          }
-        });
+      if (action.type === actions.user.register) {
+        const { auth } = store.getState();
+        const user = auth.getIn(['emailSignIn', 'default', 'form']);
+        const { email, password } = user.toJS();
+        window.firebase
+          .auth()
+          .createUserWithEmailAndPassword(email, password)
+          .then(payload => {
+            store.dispatch(push('/login'));
+          })
+          .catch(payload => {
+            console.log(payload);
+            store.dispatch({ type: actions.user.registerFailure, payload })
+          });
       }
 
       return dispatch(action);

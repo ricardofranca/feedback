@@ -27,19 +27,30 @@ export const crud = {
   findSuccess: `${NAMESPACE}-CRUD-FIND-SUCCESS`,
 }
 
-export default dispatch => (
-  {
-    onChange: payload => (
-      dispatch({ type: crud.onChange, payload })
-    ),
-    onClear: () => (
-      dispatch({ type: crud.onClear })
-    ),
-    onSubmit: () => (
-      dispatch({ type: crud.filter })
-    ),
-    request: payload => (
-      dispatch({ type: crud.find, payload })
-    ),
-  }
-)
+
+export const authDispatchers = (dispatch) => ({
+  login: () => ( dispatch({ type: user.login }) ),
+  register: () => ( dispatch({ type: user.register }) ),
+  onChange: payload => ( dispatch({ type: user.updateForm, payload }) )
+});
+
+export default {
+  user,
+}
+
+// export default dispatch => (
+//   {
+//     onChange: payload => (
+//       dispatch({ type: crud.onChange, payload })
+//     ),
+//     onClear: () => (
+//       dispatch({ type: crud.onClear })
+//     ),
+//     onSubmit: () => (
+//       dispatch({ type: crud.filter })
+//     ),
+//     request: payload => (
+//       dispatch({ type: crud.find, payload })
+//     ),
+//   }
+// )
