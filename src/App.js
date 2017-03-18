@@ -3,11 +3,12 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { browserHistory, IndexRedirect, Router, Route } from 'react-router';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
+import createSagaMiddleware from 'redux-saga';
 import firebase from 'firebase';
 import { Map } from 'immutable';
 
 import apiReducers from 'api/reducers';
-import feedbackMiddleware from 'api/middlewares';
+import sagas from 'api/sagas';
 import FeedbackRouter from 'Router';
 
 const config = {
@@ -23,9 +24,16 @@ window.firebase = firebase;
 class App extends Component {
 
   render() {
+
+    const sagaMiddleware = createSagaMiddleware({
+      onError: (error) => {
+        //window.airbrake.notify(error);
+      },
+    });
+
     const middlewares = [
       routerMiddleware(browserHistory),
-      feedbackMiddleware
+      sagaMiddleware,
     ];
     const reducers = combineReducers({
       routing: routerReducer,
@@ -34,10 +42,13 @@ class App extends Component {
     const store = createStore(reducers, compose(applyMiddleware(...middlewares)));
     const history = syncHistoryWithStore(browserHistory, store);
 
+    sagaMiddleware.run(sagas);
+
     const validate = (nextState, replace, callback) => {
-      const state = store.getState();
+      const { auth } = store.getState();
+      const email = auth.getIn(['user', 'email']);
       const { location: { pathname: payload } } = nextState;
-      if (payload  === '/profile') {
+      if (payload  === '/profile' && !email) {
         replace('/login');
       }
       callback();

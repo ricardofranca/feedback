@@ -10,8 +10,8 @@ const initialState = fromJS({
     loading: {},
     default: {
       form: {
-        email: 'cmilfont@gmail.com',
-        password: 'testes55',
+        email: '',
+        password: '',
         rememberMe: false,
         recaptcha: false,
       },
@@ -28,13 +28,15 @@ export default (state = initialState, action) => {
   if (action.type === actions.user.updateForm) {
     return state.mergeDeepIn(['emailSignIn', 'default', 'form'], action.payload);
   }
+
   if (action.type === actions.user.logged) {
-    return state.merge(action.payload);
+    return state.mergeDeepIn(['user'], action.payload);
   }
-  if (action.type === actions.user.loginFailure) {
-    return state.mergeDeepIn(['emailSignIn', 'default'], action.payload);
-  }
-  if (action.type === actions.user.registerFailure) {
+
+  if (
+    action.type === actions.user.registerFailure ||
+    action.type === actions.user.loginFailure
+  ) {
     const { code, message } = action.payload;
     return state.mergeDeepIn(['emailSignIn', 'default', 'errors'], {
       [code]: message,

@@ -7,7 +7,6 @@ const initialState = {
 };
 
 export default (products = initialState, action) => {
-console.log('reducer', action.type, action.payload);
 
   if (action.type === 'CLEAR') {
     return initialState;
