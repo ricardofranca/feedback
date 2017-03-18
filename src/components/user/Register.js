@@ -20,9 +20,9 @@ class Register extends Component {
     const { auth } = this.props;
     const errors = auth.getIn(['emailSignIn', 'default', 'errors']);
     const user = auth.getIn(['emailSignIn', 'default', 'form']);
-    const errorContainer = errors.map(({ code, message }) => (
-      <div key={`error-${code}`}>{code} - {message}</div>
-    ));
+    const errorContainer = errors.toList().map((value, key) => (
+        <div key={key}>{value}</div>
+    )).toJS();
 
     return (
       <div>

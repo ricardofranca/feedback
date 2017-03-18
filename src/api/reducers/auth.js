@@ -15,7 +15,7 @@ const initialState = fromJS({
         rememberMe: false,
         recaptcha: false,
       },
-      errors: []
+      errors: {}
     }
   }
 
@@ -33,6 +33,12 @@ export default (state = initialState, action) => {
   }
   if (action.type === actions.user.loginFailure) {
     return state.mergeDeepIn(['emailSignIn', 'default'], action.payload);
+  }
+  if (action.type === actions.user.registerFailure) {
+    const { code, message } = action.payload;
+    return state.mergeDeepIn(['emailSignIn', 'default', 'errors'], {
+      [code]: message,
+    });
   }
   return state;
 }
