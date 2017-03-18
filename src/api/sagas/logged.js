@@ -4,8 +4,9 @@ import { push } from 'react-router-redux';
 import actions from 'api/actions';
 
 function* logged(action) {
-  const { payload: { email } } = action;
-  if (email) {
+  const { payload } = action;
+  
+  if (payload && payload.email) {
     const { auth } = yield select();
     yield put(push(auth.get('navigation')));
   } else {

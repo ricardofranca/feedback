@@ -31,6 +31,7 @@ export const crud = {
 
 export const authDispatchers = (dispatch) => ({
   login: () => ( dispatch({ type: user.login }) ),
+  logout: () => ( dispatch({ type: user.logout }) ),
   register: () => ( dispatch({ type: user.register }) ),
   onChange: payload => ( dispatch({ type: user.updateForm, payload }) )
 });

@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { authDispatchers } from 'api/actions';
 
 class Toolbar extends React.Component {
   render() {
@@ -6,14 +8,14 @@ class Toolbar extends React.Component {
       <header className="mdc-toolbar mdc-toolbar--fixed">
         <section className="mdc-toolbar__section mdc-toolbar__section--align-start">
           <a className="material-icons">menu</a>
-          <span className="mdc-toolbar__title">Title</span>
+          <span className="mdc-toolbar__title">Feedback</span>
         </section>
         <section className="mdc-toolbar__section mdc-toolbar__section--align-end" role="toolbar">
-          <button><i className="material-icons">exit_to_app</i></button>
+          <button onClick={this.props.logout}><i className="material-icons">exit_to_app</i></button>
         </section>
       </header>
     );
   }
 }
 
-export default Toolbar;
+export default connect(null, authDispatchers)(Toolbar);
