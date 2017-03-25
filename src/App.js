@@ -12,12 +12,12 @@ import apiReducers from 'api/reducers';
 import sagas from 'api/sagas';
 import FeedbackRouter from 'Router';
 
-const config = {
-  apiKey: "AIzaSyDGYMxpnYaAJYyquEUM6Y__yQjhPP_skx0",
-  authDomain: "feedback-140018.firebaseapp.com",
-  databaseURL: "https://feedback-140018.firebaseio.com",
-  storageBucket: "feedback-140018.appspot.com",
-  messagingSenderId: "71457068040"
+var config = {
+  apiKey: "AIzaSyDsEFIob0GX5oBN8b1I9-OVJvq0qGagwnY",
+  authDomain: "feedback-53e06.firebaseapp.com",
+  databaseURL: "https://feedback-53e06.firebaseio.com",
+  storageBucket: "feedback-53e06.appspot.com",
+  messagingSenderId: "689132240127"
 };
 firebase.initializeApp(config);
 window.firebase = firebase;

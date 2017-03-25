@@ -24,10 +24,10 @@
     "redux-saga": "^0.14.3"
   },
   "scripts": {
-    "start": "NODE_PATH=src react-scripts start",
-    "build": "NODE_PATH=src react-scripts build",
-    "test": "NODE_PATH=src react-scripts test --coverage --env=jsdom && codecov -t bbaa888c-b3bf-4d96-9c41-3ca707d4f90e",
-    "eject": "NODE_PATH=src react-scripts eject"
+    "start": "set NODE_PATH=src; && react-scripts start",
+    "build": "set NODE_PATH=src; && react-scripts build",
+    "test": "set NODE_PATH=src; && react-scripts test --coverage --env=jsdom && codecov -t bbaa888c-b3bf-4d96-9c41-3ca707d4f90e",
+    "eject": "set NODE_PATH=src; && react-scripts eject"
   },
   "jest": {
     "coverageDirectory": "./coverage/",
