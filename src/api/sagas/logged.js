@@ -6,12 +6,16 @@ import actions from 'api/actions';
 function* logged(action) {
   try {
     const { payload } = action;
-    if (payload && payload.email) {
-      const { auth } = yield select();
-      yield put(push(auth.get('navigation')));
-    } else {
-      yield put(push('/login'));
-    }
+    // if (payload && payload.email) {
+    //   const { auth } = yield select();
+    //   yield put(push(auth.get('navigation')));
+    // } else {
+    //   yield put(push('/'));
+    // }
+
+    const { auth } = yield select();
+    yield put(push(auth.get('navigation')));
+    
   } catch (error) {
       debugger;
   }

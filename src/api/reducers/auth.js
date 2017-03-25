@@ -39,7 +39,7 @@ export default (state = initialState, action) => {
     return state.mergeDeepIn(['emailSignIn', 'default', 'form'], action.payload);
   }
 
-  if (action.type === actions.user.logged) {
+  if (action.type === actions.user.logged && action.payload) {
     return state.set('user', action.payload);
   }
 

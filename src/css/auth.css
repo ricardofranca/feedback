@@ -1,0 +1,19 @@
+.auth .mdc-layout__content {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.auth .mdc-layout__content .mdc-card {
+  background: var(--mdc-theme-primary);
+  max-width: 720px;
+  margin: auto;
+}
+
+.auth .mdc-button--primary.mdc-button--raised {
+  background: var(--mdc-theme-accent);
+}
+
+.auth .mdc-layout__content .mdc-card .mdc-card__primary .mdc-card__title--large {
+  color: var(--mdc-theme-text-primary-on-primary);
+}

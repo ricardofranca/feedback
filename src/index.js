@@ -4,5 +4,6 @@ import App from './App';
 
 import 'material-components-web/dist/material-components-web.css';
 import './css/index.css';
+import './css/auth.css';
 
 ReactDOM.render(<App />,  document.getElementById('root'));

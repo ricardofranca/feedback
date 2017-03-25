@@ -7,6 +7,7 @@ import ChangePassword from 'components/user/ChangePassword';
 
 import Profile from 'components/profile';
 import Invites from 'components/invites';
+import Okrs from 'components/invites/Okrs';
 
 const FeedbackRouter = ({ history, validate }) => {
 
@@ -19,6 +20,7 @@ const FeedbackRouter = ({ history, validate }) => {
         <IndexRedirect to="/profile" />
         <Route path="/profile" component={Profile} />
         <Route path="/invites" component={Invites} />
+        <Route path="/invites/:uid" component={Okrs} />
       </Route>
     </Router>
   )

@@ -25,10 +25,9 @@ class Login extends React.Component {
     )).toJS();
 
     return (
-      <div className="mdc-layout">
+      <div className="mdc-layout auth">
         <main className="mdc-layout__content">
-
-          <div className="mdc-card Register">
+          <div className="mdc-card">
             <section className="mdc-card__primary">
               <h1 className="mdc-card__title mdc-card__title--large">Login</h1>
             </section>
