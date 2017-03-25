@@ -56,9 +56,11 @@ class App extends Component {
   render() {
 
     const validate = (nextState, replace, callback) => {
+      console.log('--->validate');
       const { auth } = this.store.getState();
       const email = auth.getIn(['user', 'email']);
       const { location: { pathname: payload } } = nextState;
+      
       if (!email) {
         this.store.dispatch({ payload, type: actions.user.navigation });
       }

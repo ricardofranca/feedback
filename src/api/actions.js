@@ -17,6 +17,7 @@ export const user = {
   changeFailure: `${NAMESPACE}_USER_CHANGE_PASSWORD_ERROR`,
   rememberMe: `${NAMESPACE}_USER_REMEMBER_ME`,
   updateForm: `${NAMESPACE}_USER_UPDATE_FORM`,
+  redirectStep4: `${NAMESPACE}_REDIRECT_STEP_4`,
 };
 
 export const crud = {
@@ -33,7 +34,8 @@ export const authDispatchers = (dispatch) => ({
   login: () => ( dispatch({ type: user.login }) ),
   logout: () => ( dispatch({ type: user.logout }) ),
   register: () => ( dispatch({ type: user.register }) ),
-  onChange: payload => ( dispatch({ type: user.updateForm, payload }) )
+  onChange: payload => ( dispatch({ type: user.updateForm, payload }) ),
+  redirectStep4: () => ( dispatch({ type: user.redirectStep4 }) ),
 });
 
 export default {

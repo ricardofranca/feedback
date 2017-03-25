@@ -53,5 +53,7 @@ export default (state = initialState, action) => {
       [code]: message,
     });
   }
+
+  console.log('auth --> default state');
   return state;
 }
