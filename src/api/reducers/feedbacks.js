@@ -1,4 +1,5 @@
 import { fromJS } from 'immutable';
+import actions from 'api/actions';
 
 const initialState = fromJS({
   invites: {
@@ -162,6 +163,15 @@ const initialState = fromJS({
 });
 
 export default (state = initialState, action) => {
+  console.log('[FEEDBACK]', action.type, action.payload);
+
+
+  if (action.type === actions.user.updateFormFeedback) {
+    //TODO: pegar o path pelo action.payload
+    // return state.mergeDeepIn(['emailSignIn', 'default', 'form'], action.payload);
+  }
+
+
 
   return state;
 }

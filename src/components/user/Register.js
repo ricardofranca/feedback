@@ -17,6 +17,7 @@ class Register extends Component {
   }
 
   render() {
+    debugger;
     const { auth } = this.props;
     const errors = auth.getIn(['emailSignIn', 'default', 'errors']);
     const user = auth.getIn(['emailSignIn', 'default', 'form']);

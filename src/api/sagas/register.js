@@ -10,7 +10,7 @@ function fetchFirebase({ email, password }) {
 function* register() {
   /* Pega os dados  */
   try {
-
+    debugger;
     const { auth } = yield select();
     const user = auth.getIn(['emailSignIn', 'default', 'form']);
     const { email, password } = user.toJS();

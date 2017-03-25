@@ -18,7 +18,9 @@ export const user = {
   rememberMe: `${NAMESPACE}_USER_REMEMBER_ME`,
   updateForm: `${NAMESPACE}_USER_UPDATE_FORM`,
   redirectStep4: `${NAMESPACE}_REDIRECT_STEP_4`,
+  updateFormFeedback: `${NAMESPACE}_USER_UPDATE_FORM_FEEDBACK`,
 };
+
 
 export const crud = {
   filter: `${NAMESPACE}-CRUD-FILTER`,
@@ -35,7 +37,12 @@ export const authDispatchers = (dispatch) => ({
   logout: () => ( dispatch({ type: user.logout }) ),
   register: () => ( dispatch({ type: user.register }) ),
   onChange: payload => ( dispatch({ type: user.updateForm, payload }) ),
-  redirectStep4: () => ( dispatch({ type: user.redirectStep4 }) ),
+  redirectStep4: function(payload) {
+    return dispatch({ type: user.redirectStep4, payload });
+  },
+  
+  updateFormFeedback: payload => ( dispatch({ type: user.updateFormFeedback, payload }) ),
+    
 });
 
 export default {
