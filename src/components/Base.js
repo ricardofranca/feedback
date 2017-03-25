@@ -5,7 +5,7 @@ export default ({ children }) => {
   return (
     <div className="mdc-main">
       <Toolbar />
-      <main>
+      <main className="mdc-layout__content">
         <div className="mdc-toolbar-fixed-adjust">
           {children}
         </div>

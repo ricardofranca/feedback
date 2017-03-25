@@ -6,7 +6,6 @@ import { browserHistory, IndexRedirect, Router, Route } from 'react-router';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import firebase from 'firebase';
-import { Map } from 'immutable';
 
 import actions from 'api/actions';
 import apiReducers from 'api/reducers';

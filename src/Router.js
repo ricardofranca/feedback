@@ -6,6 +6,7 @@ import Register from 'components/user/Register';
 import ChangePassword from 'components/user/ChangePassword';
 
 import Profile from 'components/profile';
+import Invites from 'components/invites';
 
 const FeedbackRouter = ({ history, validate }) => {
 
@@ -17,6 +18,7 @@ const FeedbackRouter = ({ history, validate }) => {
       <Route path="/" component={Base} onEnter={validate}>
         <IndexRedirect to="/profile" />
         <Route path="/profile" component={Profile} />
+        <Route path="/invites" component={Invites} />
       </Route>
     </Router>
   )

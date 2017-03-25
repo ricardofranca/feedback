@@ -4,14 +4,18 @@ import { push } from 'react-router-redux';
 import actions from 'api/actions';
 
 function* logged(action) {
-  const { payload } = action;
-  
-  if (payload && payload.email) {
-    const { auth } = yield select();
-    yield put(push(auth.get('navigation')));
-  } else {
-    yield put(push('/login'));
+  try {
+    const { payload } = action;
+    if (payload && payload.email) {
+      const { auth } = yield select();
+      yield put(push(auth.get('navigation')));
+    } else {
+      yield put(push('/login'));
+    }
+  } catch (error) {
+      debugger;
   }
+
 }
 
 export default function* watchLogged() {

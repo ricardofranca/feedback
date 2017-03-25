@@ -25,15 +25,38 @@ class Login extends React.Component {
     )).toJS();
 
     return (
-      <div>
-        <div className="errors">{errorContainer}</div>
-        <form onSubmit={this.onSubmit}>
-          <label htmlFor="email">Email</label>
-          <input onChange={this.onChange} value={user.get('email')} className="" name="email" type="text" /> <br />
-          <label htmlFor="password">Password</label>
-          <input onChange={this.onChange} value={user.get('password')} name="password" type="password"/><br />
-          <button onClick={this.onSubmit}>Entrar</button>
-        </form>
+      <div className="mdc-layout">
+        <main className="mdc-layout__content">
+
+          <div className="mdc-card Register">
+            <section className="mdc-card__primary">
+              <h1 className="mdc-card__title mdc-card__title--large">Login</h1>
+            </section>
+            <section className="mdc-card__supporting-text">
+              <div className="errors">{errorContainer}</div>
+              <form onSubmit={this.onSubmit}>
+                <div className="mdc-textfield mdc-textfield--fullwidth">
+                  <input id="email" onChange={this.onChange} value={user.get('email')} className="mdc-textfield__input" name="email" type="text" />
+                  <label htmlFor="email" className="mdc-textfield__label">Email</label>
+                </div>
+                <p className="mdc-textfield-helptext mdc-textfield-helptext--persistent mdc-textfield-helptext--validation-msg" />
+                <div className="mdc-textfield mdc-textfield--fullwidth">
+                  <input id="password" onChange={this.onChange} value={user.get('password')} className="mdc-textfield__input" name="password" type="password"/>
+                  <label htmlFor="password" className="mdc-textfield__label">Password</label>
+                </div>
+                <p className="mdc-textfield-helptext mdc-textfield-helptext--persistent mdc-textfield-helptext--validation-msg" />
+              </form>
+            </section>
+            <section className="mdc-card__actions">
+              <button
+                onClick={this.onSubmit}
+                className="mdc-button mdc-button--raised mdc-button--primary mdc-ripple-surface"
+              >
+                Entrar
+              </button>
+            </section>
+          </div>
+        </main>
       </div>
     );
   }

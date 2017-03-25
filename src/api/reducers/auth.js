@@ -4,6 +4,7 @@ import actions from 'api/actions';
 const initialState = fromJS({
   authToken: {},
   user: {
+    uid: '',
     email: '',
   },
   navigation: '/',
@@ -31,7 +32,7 @@ export default (state = initialState, action) => {
   }
 
   if (action.type === actions.user.navigation) {
-    return state.mergeDeepIn(['navigation'], action.payload);
+    return state.set('navigation', action.payload);
   }
 
   if (action.type === actions.user.updateForm) {
@@ -39,13 +40,14 @@ export default (state = initialState, action) => {
   }
 
   if (action.type === actions.user.logged) {
-    return state.mergeDeepIn(['user'], action.payload);
+    return state.set('user', action.payload);
   }
 
   if (
     action.type === actions.user.registerFailure ||
     action.type === actions.user.loginFailure
   ) {
+    debugger;
     const { code, message } = action.payload;
     return state.mergeDeepIn(['emailSignIn', 'default', 'errors'], {
       [code]: message,
