@@ -1,10 +1,7 @@
-import products from 'api/reducers/products';
-import entities from 'api/reducers/entities';
-
+import profile from 'api/reducers/feedbacks';
 import auth from 'api/reducers/auth';
 
 export default {
-  products,
-  entities,
+  profile,
   auth,
 };

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from 'react-redux';
 import { browserHistory, IndexRedirect, Router, Route } from 'react-router';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux';
@@ -40,7 +41,8 @@ class App extends Component {
       routing: routerReducer,
       ...apiReducers
     });
-    this.store = createStore(reducers, compose(applyMiddleware(...middlewares)));
+    const composeEnhancers = composeWithDevTools({});
+    this.store = createStore(reducers, composeEnhancers(applyMiddleware(...middlewares)));
     this.history = syncHistoryWithStore(browserHistory, this.store);
 
     sagaMiddleware.run(sagas);
